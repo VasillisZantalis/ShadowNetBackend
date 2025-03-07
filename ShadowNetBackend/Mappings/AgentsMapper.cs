@@ -1,5 +1,5 @@
-﻿using ShadowNetBackend.Features.Agents.GetAllAgents;
-using ShadowNetBackend.Features.Agents;
+﻿using ShadowNetBackend.Features.Agents;
+using ShadowNetBackend.Features.Agents.Common;
 
 namespace ShadowNetBackend.Mappings;
 

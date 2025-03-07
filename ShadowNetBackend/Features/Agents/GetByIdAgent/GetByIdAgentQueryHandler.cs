@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShadowNetBackend.Exceptions;
-using ShadowNetBackend.Features.Agents.GetAllAgents;
+using ShadowNetBackend.Features.Agents.Common;
 using ShadowNetBackend.Infrastructure.Data;
 using ShadowNetBackend.Mappings;
 

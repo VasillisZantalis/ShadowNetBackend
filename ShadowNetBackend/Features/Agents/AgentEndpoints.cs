@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ShadowNetBackend.Features.Agents.Common;
 using ShadowNetBackend.Features.Agents.CreateAgent;
 using ShadowNetBackend.Features.Agents.DeleteAgent;
 using ShadowNetBackend.Features.Agents.GetAllAgents;

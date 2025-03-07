@@ -1,6 +1,6 @@
 ﻿using ShadowNetBackend.Common;
 
-namespace ShadowNetBackend.Features.Agents.GetAllAgents;
+namespace ShadowNetBackend.Features.Agents.Common;
 
 public class AgentResponse
 {

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using ShadowNetBackend.Features.Agents.Common;
 using ShadowNetBackend.Infrastructure.Data;
 using ShadowNetBackend.Mappings;
 
