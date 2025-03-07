@@ -1,0 +1,22 @@
+@ShadowNetBackend_HostAddress =https://localhost:7029
+
+POST {{ShadowNetBackend_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Test",
+  "lastName": "Test",
+  "email": "test2@shadownet.com",
+  "password": "123456aA@",
+  "rank": 1
+}
+###
+
+POST {{ShadowNetBackend_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@shadownet.com",
+  "password": "123456aA@"
+}
+###

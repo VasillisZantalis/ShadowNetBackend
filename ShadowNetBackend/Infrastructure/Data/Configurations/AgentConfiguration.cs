@@ -1,0 +1,37 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ShadowNetBackend.Features.Agents;
+
+namespace ShadowNetBackend.Infrastructure.Data.Configurations;
+
+public class AgentConfiguration : IEntityTypeConfiguration<Agent>
+{
+    public void Configure(EntityTypeBuilder<Agent> builder)
+    {
+        builder.ToTable("Agents");
+
+        builder.HasKey(x => x.Id);
+
+        builder.Property(x => x.FirstName)
+            .IsRequired()
+            .HasMaxLength(250);
+
+        builder.Property(x => x.LastName)
+            .IsRequired()
+            .HasMaxLength(250);
+
+        builder.Property(x => x.Specialization)
+            .IsRequired(false);
+
+        builder.Property(x => x.Alias)
+            .IsRequired(false);
+
+        builder.Property(x => x.ClearanceLevel)
+            .IsRequired();
+
+        builder.HasMany(a => a.Assignments)
+            .WithOne(ma => ma.Agent)
+            .HasForeignKey(ma => ma.AgentId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+}
