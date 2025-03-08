@@ -34,12 +34,12 @@ public static class MissionEndpoints
 
     private static async Task<IResult> GetMissionById(
         Guid id, 
-        [FromQuery] EncryptionType? decryptionType, 
+        [FromQuery] EncryptionType? encryptionType, 
         [FromQuery] string? encryptionKey, 
         ISender sender, 
         CancellationToken cancellation)
     {
-        var mission = await sender.Send(new GetByIdMissionQuery(id, decryptionType, encryptionKey), cancellation);
+        var mission = await sender.Send(new GetByIdMissionQuery(id, encryptionType, encryptionKey), cancellation);
         return TypedResults.Ok(mission);
     }
 

@@ -5,6 +5,7 @@ using ShadowNetBackend.Features.Missions.Common;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
 using ShadowNetBackend.Infrastructure.Security;
+using ShadowNetBackend.Mappings;
 
 namespace ShadowNetBackend.Features.Missions.GetByIdMission;
 
@@ -23,6 +24,7 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
     {
         var mission = await _dbContext.Missions
             .AsNoTracking()
+            .Include(x => x.AssignedAgents)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (mission == null)
@@ -45,7 +47,8 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
                 : mission.Location,
             Status = mission.Status,
             Risk = mission.Risk,
-            Date = mission.Date
+            Date = mission.Date,
+            AssignedAgents = mission.AssignedAgents.Select(x => x.ToAgentResponse()).ToList()
         };
     }
 }
