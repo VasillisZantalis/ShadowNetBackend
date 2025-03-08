@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using ShadowNetBackend.Features.Agents.GetAllAgents;
+using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
 
 namespace ShadowNetBackend.Features.Agents.CreateAgent;
@@ -24,6 +24,9 @@ public class CreateAgentCommandHandler : IRequestHandler<CreateAgentCommand, Gui
             Email = request.Email,
             FirstName = request.FirstName,
             LastName = request.LastName,
+            Image = request.Image is null
+                ? null
+                : FileHelper.ConvertFromBase64(request.Image),
             Rank = request.Rank,
             Alias = request.Alias,
             Specialization = request.Specialization,

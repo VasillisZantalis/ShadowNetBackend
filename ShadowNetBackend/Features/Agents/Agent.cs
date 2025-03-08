@@ -8,6 +8,7 @@ public class Agent : IdentityUser
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
+    public byte[]? Image { get; set; }
     public string? Alias { get; set; }
     public UserRank Rank { get; set; }
     public string? Specialization { get; set; }

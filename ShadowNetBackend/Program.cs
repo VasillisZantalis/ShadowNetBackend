@@ -9,6 +9,7 @@ using ShadowNetBackend.Behaviors;
 using ShadowNetBackend.Common;
 using ShadowNetBackend.Features.Agents;
 using ShadowNetBackend.Features.Auth;
+using ShadowNetBackend.Features.Missions;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
 using ShadowNetBackend.Infrastructure.Security;
@@ -72,6 +73,7 @@ var app = builder.Build();
 
 app.MapAuthEndpoints();
 app.MapAgentEndpoints();
+app.MapMissionEndpoints();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

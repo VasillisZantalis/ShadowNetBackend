@@ -27,7 +27,7 @@ public enum RelocationStatus
 
 public enum EncryptionType
 {
-    AES, RSA
+    None, AES, RSA
 }
 
 public enum ClearanceLevel

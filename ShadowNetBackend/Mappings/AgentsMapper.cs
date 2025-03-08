@@ -1,5 +1,6 @@
 ﻿using ShadowNetBackend.Features.Agents;
 using ShadowNetBackend.Features.Agents.Common;
+using ShadowNetBackend.Helpers;
 
 namespace ShadowNetBackend.Mappings;
 
@@ -12,6 +13,7 @@ public static class AgentsMapper
             Id = Guid.Parse(agent.Id),
             FirstName = agent.FirstName,
             LastName = agent.LastName,
+            Image = agent.Image != null ? FileHelper.ConvertToBase64(agent.Image) : null,
             Alias = agent.Alias,
             Rank = agent.Rank,
             Specialization = agent.Specialization,

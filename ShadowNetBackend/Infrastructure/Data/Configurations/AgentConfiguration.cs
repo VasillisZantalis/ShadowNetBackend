@@ -20,6 +20,9 @@ public class AgentConfiguration : IEntityTypeConfiguration<Agent>
             .IsRequired()
             .HasMaxLength(250);
 
+        builder.Property(m => m.Image)
+            .IsRequired(false);
+
         builder.Property(x => x.Specialization)
             .IsRequired(false);
 

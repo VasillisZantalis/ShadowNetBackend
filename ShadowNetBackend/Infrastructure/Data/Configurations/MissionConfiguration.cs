@@ -12,6 +12,13 @@ public class MissionConfiguration : IEntityTypeConfiguration<Mission>
 
         builder.HasKey(m => m.Id);
 
+        builder.Property(m => m.Title)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        builder.Property(m => m.Image)
+            .IsRequired(false);
+
         builder.Property(m => m.Objective)
             .IsRequired();
 
@@ -23,6 +30,9 @@ public class MissionConfiguration : IEntityTypeConfiguration<Mission>
             .IsRequired();
 
         builder.Property(m => m.Risk)
+            .IsRequired();
+
+        builder.Property(m => m.Date)
             .IsRequired();
 
         builder.HasMany(m => m.AssignedAgents)

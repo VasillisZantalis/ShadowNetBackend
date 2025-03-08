@@ -1,9 +1,18 @@
-﻿
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using ShadowNetBackend.Common;
+using ShadowNetBackend.Features.Missions.Common;
+using ShadowNetBackend.Features.Missions.CreateMission;
+using ShadowNetBackend.Features.Missions.DeleteMission;
+using ShadowNetBackend.Features.Missions.GetAllMissions;
+using ShadowNetBackend.Features.Missions.GetByIdMission;
+using ShadowNetBackend.Features.Missions.UpdateMission;
+
 namespace ShadowNetBackend.Features.Missions;
 
 public static class MissionEndpoints
 {
-    public static void MapMissionEndpoints(IEndpointRouteBuilder app)
+    public static void MapMissionEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/api/missions");
 
@@ -14,28 +23,45 @@ public static class MissionEndpoints
         group.MapDelete("/{id:guid}", DeleteMission).WithName("DeleteMission");
     }
 
-    private static async Task<IResult> GetAllMissions(HttpContext context)
+    private static async Task<IResult> GetAllMissions([AsParameters] MissionParameters parameters, ISender sender, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        if (parameters is null)
+            return TypedResults.BadRequest("Invalid Parameters");
+
+        var missions = await sender.Send(new GetMissionsQuery(parameters), cancellationToken);
+        return TypedResults.Ok(missions);
     }
 
-    private static async Task<IResult> GetMissionById(HttpContext context)
+    private static async Task<IResult> GetMissionById(
+        Guid id, 
+        [FromQuery] EncryptionType? decryptionType, 
+        ISender sender, 
+        CancellationToken cancellation)
     {
-        throw new NotImplementedException();
+        var mission = await sender.Send(new GetByIdMissionQuery(id, decryptionType), cancellation);
+        return TypedResults.Ok(mission);
     }
 
-    private static async Task<IResult> CreateMission(HttpContext context)
+    private static async Task<IResult> CreateMission(CreateMissionCommand command, ISender sender, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var id = await sender.Send(command, cancellationToken);
+
+        return TypedResults.Created($"/api/missions/{id}", id);
     }
 
-    private static async Task<IResult> UpdateMission(HttpContext context)
+    private static async Task<IResult> UpdateMission(Guid id, UpdateMissionCommand command, ISender sender, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        if (id != command.Id)
+            return TypedResults.BadRequest("Id mismatch");
+
+        await sender.Send(command, cancellationToken);
+
+        return TypedResults.NoContent();
     }
 
-    private static async Task<IResult> DeleteMission(HttpContext context)
+    private static async Task<IResult> DeleteMission(Guid id, ISender sender, CancellationToken cancellation)
     {
-        throw new NotImplementedException();
+        await sender.Send(new DeleteMissionCommand(id), cancellation);
+        return TypedResults.NoContent();
     }
 }
