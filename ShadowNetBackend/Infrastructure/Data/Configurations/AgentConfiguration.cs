@@ -32,9 +32,9 @@ public class AgentConfiguration : IEntityTypeConfiguration<Agent>
         builder.Property(x => x.ClearanceLevel)
             .IsRequired();
 
-        builder.HasMany(a => a.Assignments)
-            .WithOne(ma => ma.Agent)
-            .HasForeignKey(ma => ma.AgentId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(a => a.Mission)
+            .WithMany(ma => ma.AssignedAgents)
+            .HasForeignKey(a => a.MissionId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

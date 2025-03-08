@@ -9,4 +9,5 @@ public record UpdateAgentCommand(
     string LastName,
     string? Alias, 
     string? Specialization, 
-    ClearanceLevel ClearanceLevel) : IRequest<bool>;
+    ClearanceLevel ClearanceLevel,
+    Guid? MissionId) : IRequest<bool>;

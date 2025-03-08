@@ -13,5 +13,6 @@ public class Agent : IdentityUser
     public UserRank Rank { get; set; }
     public string? Specialization { get; set; }
     public ClearanceLevel ClearanceLevel { get; set; }
-    public ICollection<MissionAssignment> Assignments { get; set; } = new List<MissionAssignment>();
+    public Guid? MissionId { get; set; }
+    public Mission? Mission { get; set; }
 }

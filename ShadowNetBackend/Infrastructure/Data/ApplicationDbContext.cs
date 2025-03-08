@@ -16,7 +16,6 @@ public class ApplicationDbContext : IdentityDbContext<Agent>
 
     public DbSet<Agent> Agents { get; set; } = null!;
     public DbSet<Mission> Missions { get; set; } = null!;
-    public DbSet<MissionAssignment> MissionAssignments { get; set; } = null!;
     public DbSet<SafeHouse> SafeHouses { get; set; } = null!;
     public DbSet<Witness> Witnesses { get; set; } = null!;
     public DbSet<WitnessRelocation> WitnessRelocations { get; set; } = null!;

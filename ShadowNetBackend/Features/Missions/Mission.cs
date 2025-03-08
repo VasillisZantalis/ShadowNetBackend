@@ -1,4 +1,5 @@
 ﻿using ShadowNetBackend.Common;
+using ShadowNetBackend.Features.Agents;
 
 namespace ShadowNetBackend.Features.Missions;
 
@@ -12,5 +13,5 @@ public class Mission
     public MissionStatus Status { get; set; }
     public RiskLevel Risk { get; set; }
     public DateOnly Date { get; set; }
-    public ICollection<MissionAssignment> AssignedAgents { get; set; } = new List<MissionAssignment>();
+    public ICollection<Agent> AssignedAgents { get; set; } = new List<Agent>();
 }

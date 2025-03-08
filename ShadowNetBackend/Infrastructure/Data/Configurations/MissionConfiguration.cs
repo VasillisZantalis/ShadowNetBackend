@@ -36,8 +36,8 @@ public class MissionConfiguration : IEntityTypeConfiguration<Mission>
             .IsRequired();
 
         builder.HasMany(m => m.AssignedAgents)
-            .WithOne(ma => ma.Mission)
-            .HasForeignKey(ma => ma.MissionId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .WithOne(a => a.Mission)
+            .HasForeignKey(a => a.MissionId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

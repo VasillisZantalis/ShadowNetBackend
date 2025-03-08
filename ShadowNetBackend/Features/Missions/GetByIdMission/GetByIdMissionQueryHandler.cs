@@ -25,7 +25,7 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
         var mission = await _dbContext.Missions.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (mission == null)
-            throw new NotFoundException();
+            throw new NotFoundException($"Mission with id:{request.Id} was not found");
 
         var encryptionType = request.DecryptionType ?? EncryptionType.None;
 
