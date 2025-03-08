@@ -13,4 +13,5 @@ public class CreateMissionCommand : IRequest<Guid>
     public RiskLevel Risk { get; set; } = RiskLevel.Low;
     public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
     public EncryptionType EncryptionType { get; set; } = EncryptionType.None;
+    public string? EncryptionKey { get; set; }
 }

@@ -24,7 +24,7 @@ public class UpdateAgentCommandHandler : IRequestHandler<UpdateAgentCommand, boo
         await _sender.Send(new GetByIdAgentQuery(request.Id), cancellationToken);
 
         if (request.MissionId.HasValue)
-            await _sender.Send(new GetByIdMissionQuery(request.MissionId.Value, null), cancellationToken);
+            await _sender.Send(new GetByIdMissionQuery(request.MissionId.Value, null, null), cancellationToken);
 
         var agent = await _dbContext.Agents.FirstAsync(a => a.Id == request.Id.ToString(), cancellationToken);
 

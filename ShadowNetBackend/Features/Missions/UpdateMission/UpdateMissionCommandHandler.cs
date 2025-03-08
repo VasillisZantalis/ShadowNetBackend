@@ -19,7 +19,7 @@ public class UpdateMissionCommandHandler : IRequestHandler<UpdateMissionCommand,
 
     public async Task<bool> Handle(UpdateMissionCommand request, CancellationToken cancellationToken)
     {
-        await _sender.Send(new GetByIdMissionQuery(request.Id, null), cancellationToken);
+        await _sender.Send(new GetByIdMissionQuery(request.Id, null, null), cancellationToken);
 
         var mission = await _dbContext.Missions.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 

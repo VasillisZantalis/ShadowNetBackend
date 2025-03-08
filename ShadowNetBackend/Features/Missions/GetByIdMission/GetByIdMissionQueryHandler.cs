@@ -28,7 +28,7 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
         if (mission == null)
             throw new MissionNotFoundException();
 
-        var encryptionType = request.DecryptionType ?? EncryptionType.None;
+        var encryptionType = request.EncryptionType ?? EncryptionType.None;
 
         return new MissionResponse
         {
@@ -38,10 +38,10 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
                 ? FileHelper.ConvertToBase64(mission.Image)
                 : null,
             Objective = encryptionType != EncryptionType.None
-                ? _cryptographyService.Decrypt(mission.Objective, encryptionType)
+                ? _cryptographyService.Decrypt(mission.Objective, encryptionType, request.EncryptionKey)
                 : mission.Objective,
             Location = encryptionType != EncryptionType.None
-                ? _cryptographyService.Decrypt(mission.Location, encryptionType)
+                ? _cryptographyService.Decrypt(mission.Location, encryptionType, request.EncryptionKey)
                 : mission.Location,
             Status = mission.Status,
             Risk = mission.Risk,

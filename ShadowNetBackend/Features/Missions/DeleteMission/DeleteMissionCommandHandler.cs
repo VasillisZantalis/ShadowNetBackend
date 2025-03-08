@@ -17,7 +17,7 @@ public class DeleteMissionCommandHandler : IRequestHandler<DeleteMissionCommand,
 
     public async Task<bool> Handle(DeleteMissionCommand request, CancellationToken cancellationToken)
     {
-        await _sender.Send(new GetByIdMissionQuery(request.Id, null), cancellationToken);
+        await _sender.Send(new GetByIdMissionQuery(request.Id, null, null), cancellationToken);
 
         var mission = await _dbContext.Missions.FindAsync(request.Id);
 

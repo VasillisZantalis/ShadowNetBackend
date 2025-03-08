@@ -26,10 +26,10 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
                 ? FileHelper.ConvertFromBase64(request.Image) 
                 : null,
             Objective = request.EncryptionType != EncryptionType.None
-                ? _cryptographyService.Encrypt(request.Objective, request.EncryptionType)
+                ? _cryptographyService.Encrypt(request.Objective, request.EncryptionType, request.EncryptionKey)
                 : request.Objective,
             Location = request.EncryptionType != EncryptionType.None
-                ? _cryptographyService.Encrypt(request.Location, request.EncryptionType)
+                ? _cryptographyService.Encrypt(request.Location, request.EncryptionType, request.EncryptionKey)
                 : request.Location,
             Status = request.Status,
             Risk = request.Risk,
