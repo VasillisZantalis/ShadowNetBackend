@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ShadowNetBackend.Exceptions;
 using ShadowNetBackend.Extensions;
+using ShadowNetBackend.Features.Agents.GetByIdAgent;
 using ShadowNetBackend.Features.Missions.GetByIdMission;
 using ShadowNetBackend.Infrastructure.Data;
 
@@ -10,21 +11,20 @@ namespace ShadowNetBackend.Features.Agents.UpdateAgent;
 public class UpdateAgentCommandHandler : IRequestHandler<UpdateAgentCommand, bool>
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly IMediator _mediator;
+    private readonly ISender _sender;
 
-    public UpdateAgentCommandHandler(ApplicationDbContext dbContext, IMediator mediator)
+    public UpdateAgentCommandHandler(ApplicationDbContext dbContext, ISender sender)
     {
         _dbContext = dbContext;
-        _mediator = mediator;
+        _sender = sender;
     }
 
     public async Task<bool> Handle(UpdateAgentCommand request, CancellationToken cancellationToken)
     {
-        if (!await _dbContext.ExistsAsync<Agent>(request.Id.ToString(), cancellationToken))
-            throw new NotFoundException($"Agent with id {request.Id} was not found");
+        await _sender.Send(new GetByIdAgentQuery(request.Id), cancellationToken);
 
         if (request.MissionId.HasValue)
-            await _mediator.Send(new GetByIdMissionQuery(request.MissionId.Value, null), cancellationToken);
+            await _sender.Send(new GetByIdMissionQuery(request.MissionId.Value, null), cancellationToken);
 
         var agent = await _dbContext.Agents.FirstAsync(a => a.Id == request.Id.ToString(), cancellationToken);
 

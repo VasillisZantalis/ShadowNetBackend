@@ -1,30 +1,29 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using ShadowNetBackend.Exceptions;
-using ShadowNetBackend.Extensions;
+using ShadowNetBackend.Features.Missions.GetByIdMission;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ShadowNetBackend.Features.Missions.UpdateMission;
 
 public class UpdateMissionCommandHandler : IRequestHandler<UpdateMissionCommand, bool>
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly ISender _sender;
 
-    public UpdateMissionCommandHandler(ApplicationDbContext dbContext)
+    public UpdateMissionCommandHandler(ApplicationDbContext dbContext, ISender sender)
     {
         _dbContext = dbContext;
+        _sender = sender;
     }
 
     public async Task<bool> Handle(UpdateMissionCommand request, CancellationToken cancellationToken)
     {
-        if (!await _dbContext.ExistsAsync<Mission>(request.Id, cancellationToken))
-            throw new NotFoundException();
+        await _sender.Send(new GetByIdMissionQuery(request.Id, null), cancellationToken);
 
-        var mission = await _dbContext.Missions.FindAsync(request.Id, cancellationToken);
+        var mission = await _dbContext.Missions.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-        mission.Status = request.Status;
+        mission!.Status = request.Status;
         mission.Risk = request.Risk;
         mission.Image = request.Image != null
             ? FileHelper.ConvertFromBase64(request.Image)

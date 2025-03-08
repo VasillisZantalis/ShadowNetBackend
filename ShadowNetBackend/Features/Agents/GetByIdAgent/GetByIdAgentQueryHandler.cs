@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using ShadowNetBackend.Exceptions;
 using ShadowNetBackend.Features.Agents.Common;
 using ShadowNetBackend.Infrastructure.Data;
 using ShadowNetBackend.Mappings;
@@ -19,11 +18,11 @@ public class GetByIdAgentQueryHandler : IRequestHandler<GetByIdAgentQuery, Agent
     public async Task<AgentResponse> Handle(GetByIdAgentQuery request, CancellationToken cancellationToken)
     {
         var agent = await _dbContext.Agents
-            .AsNoTracking() 
+            .AsNoTracking()
             .FirstOrDefaultAsync(a => a.Id == request.Id.ToString(), cancellationToken);
 
         return agent is null
-            ? throw new NotFoundException("Agent not found")
+            ? throw new AgentNotFoundException()
             : agent.ToAgentResponse();
     }
 }

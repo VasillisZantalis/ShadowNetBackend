@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShadowNetBackend.Common;
-using ShadowNetBackend.Exceptions;
 using ShadowNetBackend.Features.Missions.Common;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
@@ -22,10 +21,12 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
 
     public async Task<MissionResponse> Handle(GetByIdMissionQuery request, CancellationToken cancellationToken)
     {
-        var mission = await _dbContext.Missions.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var mission = await _dbContext.Missions
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (mission == null)
-            throw new NotFoundException($"Mission with id:{request.Id} was not found");
+            throw new MissionNotFoundException();
 
         var encryptionType = request.DecryptionType ?? EncryptionType.None;
 

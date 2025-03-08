@@ -1,6 +1,5 @@
 ﻿using MediatR;
-using ShadowNetBackend.Exceptions;
-using ShadowNetBackend.Extensions;
+using ShadowNetBackend.Features.Missions.GetByIdMission;
 using ShadowNetBackend.Infrastructure.Data;
 
 namespace ShadowNetBackend.Features.Missions.DeleteMission;
@@ -8,16 +7,17 @@ namespace ShadowNetBackend.Features.Missions.DeleteMission;
 public class DeleteMissionCommandHandler : IRequestHandler<DeleteMissionCommand, bool>
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly ISender _sender;
 
-    public DeleteMissionCommandHandler(ApplicationDbContext dbContext)
+    public DeleteMissionCommandHandler(ApplicationDbContext dbContext, ISender sender)
     {
         _dbContext = dbContext;
+        _sender = sender;
     }
 
     public async Task<bool> Handle(DeleteMissionCommand request, CancellationToken cancellationToken)
     {
-        if (!await _dbContext.ExistsAsync<Mission>(request.Id, cancellationToken))
-            throw new NotFoundException();
+        await _sender.Send(new GetByIdMissionQuery(request.Id, null), cancellationToken);
 
         var mission = await _dbContext.Missions.FindAsync(request.Id);
 
