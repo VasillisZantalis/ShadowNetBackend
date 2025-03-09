@@ -22,7 +22,7 @@ public enum RiskLevel
 
 public enum RelocationStatus
 {
-    Pending, InProgress, Completed
+    None, Pending, InProgress, Completed
 }
 
 public enum EncryptionType
