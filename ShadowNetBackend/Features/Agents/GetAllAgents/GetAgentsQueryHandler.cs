@@ -18,14 +18,14 @@ public class GetAgentsQueryHandler : IRequestHandler<GetAgentsQuery, IEnumerable
 
     public async Task<IEnumerable<AgentResponse>> Handle(GetAgentsQuery request, CancellationToken cancellationToken)
     {
-        var query = _dbContext.Agents.AsQueryable();
+        var query = _dbContext.Agents.AsQueryable()
+            .ApplySorting(request.Parameters.OrderBy)
+            .ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
         if (!string.IsNullOrEmpty(request.Parameters.Name))
         {
             query = query.Where(w => request.Parameters.Name.Contains(w.FirstName) || request.Parameters.Name.Contains(w.LastName));
         }
-
-        query.ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
         var agents = await query.ToListAsync(cancellationToken);
 

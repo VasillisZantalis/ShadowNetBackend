@@ -19,7 +19,9 @@ public class GetWitnessesQueryHandler : IRequestHandler<GetWitnessesQuery, IEnum
 
     public async Task<IEnumerable<WitnessResponse>> Handle(GetWitnessesQuery request, CancellationToken cancellationToken)
     {
-        var query = _dbContext.Witnesses.AsQueryable();
+        var query = _dbContext.Witnesses.AsQueryable()
+            .ApplySorting(request.Parameters.OrderBy)
+            .ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
         if (!string.IsNullOrEmpty(request.Parameters.Name))
         {
@@ -32,8 +34,6 @@ public class GetWitnessesQueryHandler : IRequestHandler<GetWitnessesQuery, IEnum
                 && (request.Parameters.Alias.Contains(w.Alias) 
                     || request.Parameters.Alias.Contains(w.Alias)));
         }
-
-        query.ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
         var witnesses = await query.ToListAsync(cancellationToken);
 

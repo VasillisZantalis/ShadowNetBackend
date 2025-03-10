@@ -15,4 +15,5 @@ public abstract class QueryStringParameters
 
     public string? OrderBy { get; set; }
     public string? Fields { get; set; }
+    //public Dictionary<object, SortingOrder>? Sortings { get; set; }
 }

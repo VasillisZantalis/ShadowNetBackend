@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using ShadowNetBackend.Extensions;
 using ShadowNetBackend.Features.Missions.Common;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
@@ -17,7 +18,9 @@ public class GetMissionsQueryHandler : IRequestHandler<GetMissionsQuery, IEnumer
 
     public async Task<IEnumerable<MissionResponse>> Handle(GetMissionsQuery request, CancellationToken cancellationToken)
     {
-        var query = _dbContext.Missions.AsQueryable();
+        var query = _dbContext.Missions.AsQueryable()
+            .ApplySorting(request.Parameters.OrderBy)
+            .ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
         if (request.Parameters.Status.HasValue)
         {
@@ -27,14 +30,6 @@ public class GetMissionsQueryHandler : IRequestHandler<GetMissionsQuery, IEnumer
         if (request.Parameters.Risk.HasValue)
         {
             query = query.Where(w => w.Risk == request.Parameters.Risk.Value);
-        }
-
-        if (request.Parameters.PageSize.HasValue && request.Parameters.PageNumber.HasValue)
-        {
-            int pageSize = request.Parameters.PageSize.Value;
-            int pageNumber = request.Parameters.PageNumber.Value;
-
-            query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
         }
 
         var missions = await query.ToListAsync(cancellationToken);

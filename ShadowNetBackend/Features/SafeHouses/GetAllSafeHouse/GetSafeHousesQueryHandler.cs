@@ -19,9 +19,9 @@ public class GetSafeHousesQueryHandler : IRequestHandler<GetSafeHousesQuery, IEn
 
     public async Task<IEnumerable<SafeHouseResponse>> Handle(GetSafeHousesQuery request, CancellationToken cancellationToken)
     {
-        var query = _dbContext.SafeHouses.AsQueryable();
-
-        query.ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
+        var query = _dbContext.SafeHouses.AsQueryable()
+            .ApplySorting(request.Parameters.OrderBy)
+            .ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
         var SafeHouses = await query.ToListAsync(cancellationToken);
 
