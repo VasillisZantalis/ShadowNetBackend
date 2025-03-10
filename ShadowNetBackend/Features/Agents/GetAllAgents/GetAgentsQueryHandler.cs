@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using ShadowNetBackend.Extensions;
 using ShadowNetBackend.Features.Agents.Common;
 using ShadowNetBackend.Infrastructure.Data;
 using ShadowNetBackend.Mappings;
@@ -24,13 +25,7 @@ public class GetAgentsQueryHandler : IRequestHandler<GetAgentsQuery, IEnumerable
             query = query.Where(w => request.Parameters.Name.Contains(w.FirstName) || request.Parameters.Name.Contains(w.LastName));
         }
 
-        if (request.Parameters.PageSize.HasValue && request.Parameters.PageNumber.HasValue)
-        {
-            int pageSize = request.Parameters.PageSize.Value;
-            int pageNumber = request.Parameters.PageNumber.Value;
-
-            query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-        }
+        query.ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
         var agents = await query.ToListAsync(cancellationToken);
 

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using ShadowNetBackend.Extensions;
 using ShadowNetBackend.Features.Agents.Common;
 using ShadowNetBackend.Features.Witnesses.Common;
 using ShadowNetBackend.Infrastructure.Data;
@@ -32,13 +33,7 @@ public class GetWitnessesQueryHandler : IRequestHandler<GetWitnessesQuery, IEnum
                     || request.Parameters.Alias.Contains(w.Alias)));
         }
 
-        if (request.Parameters.PageSize.HasValue && request.Parameters.PageNumber.HasValue)
-        {
-            int pageSize = request.Parameters.PageSize.Value;
-            int pageNumber = request.Parameters.PageNumber.Value;
-
-            query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-        }
+        query.ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
         var witnesses = await query.ToListAsync(cancellationToken);
 

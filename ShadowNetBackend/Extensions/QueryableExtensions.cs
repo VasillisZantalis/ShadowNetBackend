@@ -29,4 +29,14 @@ public static class QueryableExtensions
 
         return query.Provider.CreateQuery<T>(resultExpression);
     }
+
+    public static IQueryable<T> ApplyPagination<T>(this IQueryable<T> query, int? pageSize, int? pageNumber)
+    {
+        if (pageSize.HasValue && pageNumber.HasValue)
+        {
+            int skip = (pageNumber.Value - 1) * pageSize.Value;
+            return query.Skip(skip).Take(pageSize.Value);
+        }
+        return query;
+    }
 }
