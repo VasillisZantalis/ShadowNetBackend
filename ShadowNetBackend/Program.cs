@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using ShadowNetBackend.Behaviors;
@@ -13,8 +14,9 @@ using ShadowNetBackend.Features.Missions;
 using ShadowNetBackend.Features.SafeHouses;
 using ShadowNetBackend.Features.Witnesses;
 using ShadowNetBackend.Helpers;
+using ShadowNetBackend.Infrastructure;
 using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Security;
+using ShadowNetBackend.Infrastructure.Interfaces;
 using ShadowNetBackend.Middleware;
 using System.Reflection;
 using System.Text;
@@ -29,6 +31,7 @@ builder.Configuration
     .AddUserSecrets<Program>();
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+builder.Services.Configure<RedisCacheSettings>(builder.Configuration.GetSection("RedisCacheSettings"));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
@@ -36,6 +39,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<Agent, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetSection("RedisCacheSettings:ConnectionString").Value;
+    options.InstanceName = "Shadownet_";
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -61,6 +70,7 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 builder.Services.AddSingleton<ICryptographyService, CryptographyService>();
+builder.Services.AddSingleton<ICacheService, CacheService>();
 builder.Services.AddSingleton<JwtHelper>();
 
 builder.Services.Configure<JsonOptions>(options =>

@@ -1,7 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using ShadowNetBackend.Common;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
+using ShadowNetBackend.Infrastructure.Interfaces;
 
 namespace ShadowNetBackend.Features.Agents.CreateAgent;
 
@@ -9,11 +12,13 @@ public class CreateAgentCommandHandler : IRequestHandler<CreateAgentCommand, Gui
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly UserManager<Agent> _userManager;
+    private readonly ICacheService _cache;
 
-    public CreateAgentCommandHandler(UserManager<Agent> userManager, ApplicationDbContext dbContext)
+    public CreateAgentCommandHandler(UserManager<Agent> userManager, ApplicationDbContext dbContext, ICacheService cache)
     {
         _userManager = userManager;
         _dbContext = dbContext;
+        _cache = cache;
     }
 
     public async Task<Guid?> Handle(CreateAgentCommand request, CancellationToken cancellationToken)
@@ -42,6 +47,8 @@ public class CreateAgentCommandHandler : IRequestHandler<CreateAgentCommand, Gui
 
         _dbContext.Agents.Attach(user);
         await _dbContext.SaveChangesAsync(cancellationToken);
+
+        await _cache.RemoveAsync("agents");
 
         return Guid.Parse(user.Id);
     }

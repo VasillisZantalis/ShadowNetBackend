@@ -2,7 +2,7 @@
 using ShadowNetBackend.Common;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Security;
+using ShadowNetBackend.Infrastructure.Interfaces;
 
 namespace ShadowNetBackend.Features.Missions.CreateMission;
 

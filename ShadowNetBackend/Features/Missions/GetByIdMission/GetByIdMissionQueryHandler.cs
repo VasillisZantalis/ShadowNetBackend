@@ -4,7 +4,7 @@ using ShadowNetBackend.Common;
 using ShadowNetBackend.Features.Missions.Common;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Security;
+using ShadowNetBackend.Infrastructure.Interfaces;
 using ShadowNetBackend.Mappings;
 
 namespace ShadowNetBackend.Features.Missions.GetByIdMission;

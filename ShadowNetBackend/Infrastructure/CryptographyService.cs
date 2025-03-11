@@ -1,8 +1,9 @@
 ﻿using ShadowNetBackend.Common;
+using ShadowNetBackend.Infrastructure.Interfaces;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ShadowNetBackend.Infrastructure.Security;
+namespace ShadowNetBackend.Infrastructure;
 
 public class CryptographyService : ICryptographyService
 {
