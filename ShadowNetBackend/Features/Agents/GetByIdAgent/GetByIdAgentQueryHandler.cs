@@ -12,14 +12,12 @@ namespace ShadowNetBackend.Features.Agents.GetByIdAgent;
 public class GetByIdAgentQueryHandler : IRequestHandler<GetByIdAgentQuery, AgentResponse>
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly RedisCacheSettings _cacheSettings;
     private readonly ICacheService _cache;
 
-    public GetByIdAgentQueryHandler(ApplicationDbContext dbContext, ICacheService cache, IOptions<RedisCacheSettings> cacheSettings)
+    public GetByIdAgentQueryHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
         _cache = cache;
-        _cacheSettings = cacheSettings.Value;
     }
 
     public async Task<AgentResponse> Handle(GetByIdAgentQuery request, CancellationToken cancellationToken)
@@ -40,7 +38,7 @@ public class GetByIdAgentQueryHandler : IRequestHandler<GetByIdAgentQuery, Agent
             throw new AgentNotFoundException();
 
         var agentResponse = agent.ToAgentResponse();
-        await _cache.SetAsync(cacheKey, agentResponse, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
+        await _cache.SetAsync(cacheKey, agentResponse, TimeSpan.FromMinutes(15));
 
         return agentResponse;
     }

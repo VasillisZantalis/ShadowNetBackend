@@ -12,14 +12,12 @@ namespace ShadowNetBackend.Features.Witnesses.GetByIdWitness;
 public class GetByIdWitnessQueryHandler : IRequestHandler<GetByIdWitnessQuery, WitnessResponse>
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly RedisCacheSettings _cacheSettings;
     private readonly ICacheService _cache;
 
-    public GetByIdWitnessQueryHandler(ApplicationDbContext dbContext, ICacheService cache, IOptions<RedisCacheSettings> cacheSettings)
+    public GetByIdWitnessQueryHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
         _cache = cache;
-        _cacheSettings = cacheSettings.Value;
     }
 
     public async Task<WitnessResponse> Handle(GetByIdWitnessQuery request, CancellationToken cancellationToken)
@@ -41,7 +39,7 @@ public class GetByIdWitnessQueryHandler : IRequestHandler<GetByIdWitnessQuery, W
 
         var witnessResponse = witness.ToWitnessResponse();
 
-        await _cache.SetAsync(cacheKey, witnessResponse, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
+        await _cache.SetAsync(cacheKey, witnessResponse, TimeSpan.FromMinutes(15));
 
         return witnessResponse;
     }

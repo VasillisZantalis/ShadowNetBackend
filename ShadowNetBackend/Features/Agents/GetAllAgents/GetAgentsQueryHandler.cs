@@ -13,14 +13,12 @@ namespace ShadowNetBackend.Features.Agents.GetAllAgents;
 public class GetAgentsQueryHandler : IRequestHandler<GetAgentsQuery, IEnumerable<AgentResponse>>
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly RedisCacheSettings _cacheSettings;
     private readonly ICacheService _cache;
 
-    public GetAgentsQueryHandler(ApplicationDbContext dbContext, ICacheService cache, IOptions<RedisCacheSettings> cacheSettings)
+    public GetAgentsQueryHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
         _cache = cache;
-        _cacheSettings = cacheSettings.Value;
     }
 
     public async Task<IEnumerable<AgentResponse>> Handle(GetAgentsQuery request, CancellationToken cancellationToken)
@@ -44,7 +42,7 @@ public class GetAgentsQueryHandler : IRequestHandler<GetAgentsQuery, IEnumerable
 
         var agentResponses = agents.Select(s => s.ToAgentResponse()).ToList();
 
-        await _cache.SetAsync(nameof(CacheKeys.Agents), agentResponses, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
+        await _cache.SetAsync(nameof(CacheKeys.Agents), agentResponses, TimeSpan.FromMinutes(15));
 
         return agentResponses;
     }

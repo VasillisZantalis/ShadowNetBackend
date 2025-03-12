@@ -1,0 +1,6 @@
+﻿@ShadowNetBackend_HostAddress = https://localhost:7029
+@AgentId = 1fd4f57c-72ca-4f78-a4c5-91439503af7b
+
+GET {{ShadowNetBackend_HostAddress}}/api/agents/{{AgentId}}
+
+###

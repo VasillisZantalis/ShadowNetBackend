@@ -15,13 +15,11 @@ public class GetMissionsQueryHandler : IRequestHandler<GetMissionsQuery, IEnumer
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly ICacheService _cache;
-    private readonly RedisCacheSettings _cacheSettings;
 
-    public GetMissionsQueryHandler(ApplicationDbContext dbContext, ICacheService cache, IOptions<RedisCacheSettings> cacheSettings)
+    public GetMissionsQueryHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
         _cache = cache;
-        _cacheSettings = cacheSettings.Value;
     }
 
     public async Task<IEnumerable<MissionResponse>> Handle(GetMissionsQuery request, CancellationToken cancellationToken)
@@ -62,7 +60,7 @@ public class GetMissionsQueryHandler : IRequestHandler<GetMissionsQuery, IEnumer
             Date = mission.Date
         }).ToList();
 
-        await _cache.SetAsync(nameof(CacheKeys.Missions), missionResponses, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
+        await _cache.SetAsync(nameof(CacheKeys.Missions), missionResponses, TimeSpan.FromMinutes(15));
 
         return missionResponses;
     }

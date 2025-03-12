@@ -16,14 +16,12 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
     private readonly ApplicationDbContext _dbContext;
     private readonly ICryptographyService _cryptographyService;
     private readonly ICacheService _cache;
-    private readonly RedisCacheSettings _cacheSettings;
 
-    public GetByIdMissionQueryHandler(ApplicationDbContext dbContext, ICryptographyService cryptographyService, ICacheService cache, IOptions<RedisCacheSettings> cacheSettings)
+    public GetByIdMissionQueryHandler(ApplicationDbContext dbContext, ICryptographyService cryptographyService, ICacheService cache)
     {
         _dbContext = dbContext;
         _cryptographyService = cryptographyService;
         _cache = cache;
-        _cacheSettings = cacheSettings.Value;
     }
 
     public async Task<MissionResponse> Handle(GetByIdMissionQuery request, CancellationToken cancellationToken)
@@ -65,7 +63,7 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
             AssignedAgents = mission.AssignedAgents.Select(x => x.ToAgentResponse()).ToList()
         };
 
-        await _cache.SetAsync(cacheKey, missionResponse, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
+        await _cache.SetAsync(cacheKey, missionResponse, TimeSpan.FromMinutes(15));
 
         return missionResponse;
     }

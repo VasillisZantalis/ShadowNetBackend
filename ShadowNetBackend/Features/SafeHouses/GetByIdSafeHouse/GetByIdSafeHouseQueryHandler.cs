@@ -13,14 +13,12 @@ namespace ShadowNetBackend.Features.SafeHouses.GetByIdSafeHouse;
 public class GetByIdSafeHouseQueryHandler : IRequestHandler<GetByIdSafeHouseQuery, SafeHouseResponse>
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly RedisCacheSettings _cacheSettings;
     private readonly ICacheService _cache;
 
-    public GetByIdSafeHouseQueryHandler(ApplicationDbContext dbContext, ICacheService cache, IOptions<RedisCacheSettings> cacheSettings)
+    public GetByIdSafeHouseQueryHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
         _cache = cache;
-        _cacheSettings = cacheSettings.Value;
     }
 
     public async Task<SafeHouseResponse> Handle(GetByIdSafeHouseQuery request, CancellationToken cancellationToken)
@@ -42,7 +40,7 @@ public class GetByIdSafeHouseQueryHandler : IRequestHandler<GetByIdSafeHouseQuer
 
 
         var safeHouseResponse = safeHouse.ToSafeHouseResponse();
-        await _cache.SetAsync(cacheKey, safeHouseResponse, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
+        await _cache.SetAsync(cacheKey, safeHouseResponse, TimeSpan.FromHours(2));
 
         return safeHouseResponse;
     }

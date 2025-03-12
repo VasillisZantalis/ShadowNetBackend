@@ -13,14 +13,12 @@ namespace ShadowNetBackend.Features.Witnesses.GetAllWitnesses;
 public class GetWitnessesQueryHandler : IRequestHandler<GetWitnessesQuery, IEnumerable<WitnessResponse>>
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly RedisCacheSettings _cacheSettings;
     private readonly ICacheService _cache;
 
-    public GetWitnessesQueryHandler(ApplicationDbContext dbContext, ICacheService cache, IOptions<RedisCacheSettings> cacheSettings)
+    public GetWitnessesQueryHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
         _cache = cache;
-        _cacheSettings = cacheSettings.Value;
     }
 
     public async Task<IEnumerable<WitnessResponse>> Handle(GetWitnessesQuery request, CancellationToken cancellationToken)
@@ -50,7 +48,7 @@ public class GetWitnessesQueryHandler : IRequestHandler<GetWitnessesQuery, IEnum
         var witnesses = await query.ToListAsync(cancellationToken);
         var witnessResponses = witnesses.Select(s => s.ToWitnessResponse()).ToList();
 
-        await _cache.SetAsync(nameof(CacheKeys.Witnesses), witnessResponses, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
+        await _cache.SetAsync(nameof(CacheKeys.Witnesses), witnessResponses, TimeSpan.FromMinutes(15));
 
         return witnessResponses;
     }
