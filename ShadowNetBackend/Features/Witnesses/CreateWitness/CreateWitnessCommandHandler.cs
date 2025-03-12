@@ -1,16 +1,20 @@
 ﻿using MediatR;
+using ShadowNetBackend.Common;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
+using ShadowNetBackend.Infrastructure.Interfaces;
 
 namespace ShadowNetBackend.Features.Witnesses.CreateWitness;
 
 public class CreateWitnessCommandHandler : IRequestHandler<CreateWitnessCommand, Guid?>
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly ICacheService _cache;
 
-    public CreateWitnessCommandHandler(ApplicationDbContext dbContext)
+    public CreateWitnessCommandHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
+        _cache = cache;
     }
 
     public async Task<Guid?> Handle(CreateWitnessCommand request, CancellationToken cancellationToken)
@@ -30,6 +34,8 @@ public class CreateWitnessCommandHandler : IRequestHandler<CreateWitnessCommand,
 
         _dbContext.Witnesses.Add(witness);
         await _dbContext.SaveChangesAsync(cancellationToken);
+
+        await _cache.RemoveAsync($"{CacheKeys.Witnesses}");
 
         return witness.Id;
     }

@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using ShadowNetBackend.Common;
 using ShadowNetBackend.Features.Missions.GetByIdMission;
 using ShadowNetBackend.Features.Witnesses.GetByIdWitness;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
+using ShadowNetBackend.Infrastructure.Interfaces;
 
 namespace ShadowNetBackend.Features.Witnesses.UpdateWitness;
 
@@ -11,15 +13,19 @@ public class UpdateWitnessCommandHandler : IRequestHandler<UpdateWitnessCommand,
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly ISender _sender;
+    private readonly ICacheService _cache;
 
-    public UpdateWitnessCommandHandler(ApplicationDbContext dbContext, ISender sender)
+    public UpdateWitnessCommandHandler(ApplicationDbContext dbContext, ISender sender, ICacheService cache)
     {
         _dbContext = dbContext;
         _sender = sender;
+        _cache = cache;
     }
 
     public async Task<bool> Handle(UpdateWitnessCommand request, CancellationToken cancellationToken)
     {
+        string cacheKey = $"{CacheKeys.Witness}_{request.Id}";
+
         await _sender.Send(new GetByIdWitnessQuery(request.Id), cancellationToken);
 
         var witness = await _dbContext.Witnesses.FirstOrDefaultAsync(w => w.Id == request.Id, cancellationToken);
@@ -33,6 +39,8 @@ public class UpdateWitnessCommandHandler : IRequestHandler<UpdateWitnessCommand,
         witness.RelocationStatus = request.RelocationStatus;
 
         await _dbContext.SaveChangesAsync(cancellationToken);
+
+        await _cache.RemoveAsync(cacheKey);
 
         return true;
     }

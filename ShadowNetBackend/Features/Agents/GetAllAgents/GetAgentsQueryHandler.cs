@@ -25,9 +25,7 @@ public class GetAgentsQueryHandler : IRequestHandler<GetAgentsQuery, IEnumerable
 
     public async Task<IEnumerable<AgentResponse>> Handle(GetAgentsQuery request, CancellationToken cancellationToken)
     {
-        string cacheKey = "agents";
-
-        var cachedAgents = await _cache.GetDataAsync<List<AgentResponse>>(cacheKey);
+        var cachedAgents = await _cache.GetDataAsync<List<AgentResponse>>(nameof(CacheKeys.Agents));
         if (cachedAgents is not null)
         {
             return cachedAgents;
@@ -46,7 +44,7 @@ public class GetAgentsQueryHandler : IRequestHandler<GetAgentsQuery, IEnumerable
 
         var agentResponses = agents.Select(s => s.ToAgentResponse()).ToList();
 
-        await _cache.SetAsync(cacheKey, agentResponses, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
+        await _cache.SetAsync(nameof(CacheKeys.Agents), agentResponses, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
 
         return agentResponses;
     }

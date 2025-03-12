@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using ShadowNetBackend.Common;
 using ShadowNetBackend.Features.Missions.GetByIdMission;
 using ShadowNetBackend.Infrastructure.Data;
+using ShadowNetBackend.Infrastructure.Interfaces;
 
 namespace ShadowNetBackend.Features.Missions.DeleteMission;
 
@@ -8,21 +10,27 @@ public class DeleteMissionCommandHandler : IRequestHandler<DeleteMissionCommand,
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly ISender _sender;
+    private readonly ICacheService _cache;
 
-    public DeleteMissionCommandHandler(ApplicationDbContext dbContext, ISender sender)
+    public DeleteMissionCommandHandler(ApplicationDbContext dbContext, ISender sender, ICacheService cache)
     {
         _dbContext = dbContext;
         _sender = sender;
+        _cache = cache;
     }
 
     public async Task<bool> Handle(DeleteMissionCommand request, CancellationToken cancellationToken)
     {
+        string cacheKey = $"{CacheKeys.Mission}_{request.Id}";
+
         await _sender.Send(new GetByIdMissionQuery(request.Id, null, null), cancellationToken);
 
         var mission = await _dbContext.Missions.FindAsync(request.Id);
 
         _dbContext.Missions.Remove(mission!);
         await _dbContext.SaveChangesAsync(cancellationToken);
+
+        await _cache.RemoveAsync(cacheKey);
 
         return true;
     }

@@ -10,11 +10,13 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly ICryptographyService _cryptographyService;
+    private readonly ICacheService _cache;
 
-    public CreateMissionCommandHandler(ApplicationDbContext dbContext, ICryptographyService cryptographyService)
+    public CreateMissionCommandHandler(ApplicationDbContext dbContext, ICryptographyService cryptographyService, ICacheService cache)
     {
         _dbContext = dbContext;
         _cryptographyService = cryptographyService;
+        _cache = cache;
     }
 
     public async Task<Guid> Handle(CreateMissionCommand request, CancellationToken cancellationToken)
@@ -38,6 +40,8 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
 
         _dbContext.Missions.Add(mission);
         await _dbContext.SaveChangesAsync();
+
+        await _cache.RemoveAsync(nameof(CacheKeys.Missions));
 
         return mission.Id;
     }

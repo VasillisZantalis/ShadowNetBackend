@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using ShadowNetBackend.Common;
+using ShadowNetBackend.Features.Agents.Common;
 using ShadowNetBackend.Features.Missions.Common;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
@@ -13,15 +15,27 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly ICryptographyService _cryptographyService;
+    private readonly ICacheService _cache;
+    private readonly RedisCacheSettings _cacheSettings;
 
-    public GetByIdMissionQueryHandler(ApplicationDbContext dbContext, ICryptographyService cryptographyService)
+    public GetByIdMissionQueryHandler(ApplicationDbContext dbContext, ICryptographyService cryptographyService, ICacheService cache, IOptions<RedisCacheSettings> cacheSettings)
     {
         _dbContext = dbContext;
         _cryptographyService = cryptographyService;
+        _cache = cache;
+        _cacheSettings = cacheSettings.Value;
     }
 
     public async Task<MissionResponse> Handle(GetByIdMissionQuery request, CancellationToken cancellationToken)
     {
+        string cacheKey = $"{CacheKeys.Mission}_{request.Id}";
+
+        var cachedMission = await _cache.GetDataAsync<MissionResponse>(cacheKey);
+        if (cachedMission is not null)
+        {
+            return cachedMission;
+        }
+
         var mission = await _dbContext.Missions
             .AsNoTracking()
             .Include(x => x.AssignedAgents)
@@ -32,7 +46,7 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
 
         var encryptionType = request.EncryptionType ?? EncryptionType.None;
 
-        return new MissionResponse
+        var missionResponse =  new MissionResponse
         {
             Id = mission.Id,
             Title = mission.Title,
@@ -50,5 +64,9 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
             Date = mission.Date,
             AssignedAgents = mission.AssignedAgents.Select(x => x.ToAgentResponse()).ToList()
         };
+
+        await _cache.SetAsync(cacheKey, missionResponse, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
+
+        return missionResponse;
     }
 }

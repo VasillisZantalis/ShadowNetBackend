@@ -1,15 +1,19 @@
 ﻿using MediatR;
+using ShadowNetBackend.Common;
 using ShadowNetBackend.Infrastructure.Data;
+using ShadowNetBackend.Infrastructure.Interfaces;
 
 namespace ShadowNetBackend.Features.SafeHouses.CreateSafeHouse;
 
 public class CreateSafeHouseCommandHandler : IRequestHandler<CreateSafeHouseCommand, int>
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly ICacheService _cache;
 
-    public CreateSafeHouseCommandHandler(ApplicationDbContext dbContext)
+    public CreateSafeHouseCommandHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
+        _cache = cache;
     }
 
     public async Task<int> Handle(CreateSafeHouseCommand request, CancellationToken cancellationToken)
@@ -23,6 +27,8 @@ public class CreateSafeHouseCommandHandler : IRequestHandler<CreateSafeHouseComm
 
         _dbContext.SafeHouses.Add(safeHouse);
         await _dbContext.SaveChangesAsync();
+
+        await _cache.RemoveAsync(nameof(CacheKeys.SafeHouses));
 
         return safeHouse.Id;
     }

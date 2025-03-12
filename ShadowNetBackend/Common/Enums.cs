@@ -39,3 +39,15 @@ public enum SortingOrder
 {
     Asc, Desc
 }
+
+public enum CacheKeys
+{
+    Agents,
+    Agent,
+    Missions,
+    Mission,
+    Witnesses,
+    Witness,
+    SafeHouses,
+    SafeHouse
+}

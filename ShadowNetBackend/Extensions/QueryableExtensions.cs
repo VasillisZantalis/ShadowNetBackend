@@ -1,5 +1,4 @@
-﻿using ShadowNetBackend.Common;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
 
 namespace ShadowNetBackend.Extensions;
@@ -40,7 +39,7 @@ public static class QueryableExtensions
             var resultExpression = Expression.Call(
                 typeof(Queryable),
                 methodName,
-                new Type[] { entityType, property.PropertyType },
+                [entityType, property.PropertyType],
                 query.Expression,
                 Expression.Quote(orderByExpression));
 

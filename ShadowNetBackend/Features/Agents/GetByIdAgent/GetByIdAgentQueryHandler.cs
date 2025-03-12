@@ -24,7 +24,7 @@ public class GetByIdAgentQueryHandler : IRequestHandler<GetByIdAgentQuery, Agent
 
     public async Task<AgentResponse> Handle(GetByIdAgentQuery request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"agent_{request.Id}";
+        string cacheKey = $"{CacheKeys.Agent}_{request.Id}";
 
         var cachedAgent = await _cache.GetDataAsync<AgentResponse>(cacheKey);
         if (cachedAgent is not null)
@@ -40,7 +40,6 @@ public class GetByIdAgentQueryHandler : IRequestHandler<GetByIdAgentQuery, Agent
             throw new AgentNotFoundException();
 
         var agentResponse = agent.ToAgentResponse();
-
         await _cache.SetAsync(cacheKey, agentResponse, TimeSpan.FromSeconds(_cacheSettings.DefaultSlidingExpiration));
 
         return agentResponse;
