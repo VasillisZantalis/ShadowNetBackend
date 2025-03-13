@@ -36,7 +36,7 @@ public class GetByIdMessageQueryHandler : IRequestHandler<GetByIdMessageQuery, M
             message.SenderId,
             message.ReceiverId,
             message.Title,
-            _cryptographyService.Encrypt(message.Content, EncryptionType.AES),
+            _cryptographyService.Decrypt(message.Content, EncryptionType.AES),
             message.SentAt
         );
 

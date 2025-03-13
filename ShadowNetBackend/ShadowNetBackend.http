@@ -4,3 +4,7 @@
 GET {{ShadowNetBackend_HostAddress}}/api/agents/{{AgentId}}
 
 ###
+
+GET {{ShadowNetBackend_HostAddress}}/api/agents
+
+###
