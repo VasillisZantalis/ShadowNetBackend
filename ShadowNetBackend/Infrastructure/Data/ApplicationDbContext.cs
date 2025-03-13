@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShadowNetBackend.Common;
 using ShadowNetBackend.Features.Agents;
-using ShadowNetBackend.Features.Communications;
+using ShadowNetBackend.Features.Messages;
 using ShadowNetBackend.Features.Missions;
 using ShadowNetBackend.Features.SafeHouses;
 using ShadowNetBackend.Features.Witnesses;

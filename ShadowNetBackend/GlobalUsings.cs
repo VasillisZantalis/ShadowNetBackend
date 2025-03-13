@@ -1,7 +1,7 @@
 ﻿global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using ShadowNetBackend.Common;
-global using ShadowNetBackend.Features.Communications.Common;
+global using ShadowNetBackend.Features.Messages.Common;
 global using ShadowNetBackend.Infrastructure.Data;
 global using ShadowNetBackend.Infrastructure.Interfaces;
 global using ShadowNetBackend.Extensions;

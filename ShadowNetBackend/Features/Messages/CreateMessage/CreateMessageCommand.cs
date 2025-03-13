@@ -1,4 +1,4 @@
-﻿namespace ShadowNetBackend.Features.Communications.CreateMessage;
+﻿namespace ShadowNetBackend.Features.Messages.CreateMessage;
 
 public record CreateMessageCommand(
     Guid SenderId,

@@ -1,6 +1,6 @@
-﻿using ShadowNetBackend.Features.Communications.GetByIdMessage;
+﻿using ShadowNetBackend.Features.Messages.GetByIdMessage;
 
-namespace ShadowNetBackend.Features.Communications.DeleteMessage;
+namespace ShadowNetBackend.Features.Messages.DeleteMessage;
 
 public class DeleteMessageCommandHandler : IRequestHandler<DeleteMessageCommand, bool>
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using ShadowNetBackend.Features.Agents;
-using ShadowNetBackend.Features.Communications;
+using ShadowNetBackend.Features.Messages;
 
 namespace ShadowNetBackend.Infrastructure.Data.Configurations;
 

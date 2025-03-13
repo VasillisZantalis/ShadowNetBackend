@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using ShadowNetBackend.Behaviors;
+using ShadowNetBackend.Features.Messages;
 using ShadowNetBackend.Middleware;
 using System.Reflection;
 using System.Text;
@@ -49,6 +50,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddSignalR();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
@@ -77,6 +89,11 @@ app.MapMissionEndpoints();
 app.MapWitnessEndpoints();
 app.MapSafeHouseEndpoints();
 app.MapMessageEndpoints();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<ChatHub>("/chatHub");
+});
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

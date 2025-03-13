@@ -1,9 +1,9 @@
-﻿using ShadowNetBackend.Features.Communications.CreateMessage;
-using ShadowNetBackend.Features.Communications.DeleteMessage;
-using ShadowNetBackend.Features.Communications.GetAllMessages;
-using ShadowNetBackend.Features.Communications.GetByIdMessage;
+﻿using ShadowNetBackend.Features.Messages.CreateMessage;
+using ShadowNetBackend.Features.Messages.DeleteMessage;
+using ShadowNetBackend.Features.Messages.GetAllMessages;
+using ShadowNetBackend.Features.Messages.GetByIdMessage;
 
-namespace ShadowNetBackend.Features.Communications;
+namespace ShadowNetBackend.Features.Messages;
 
 public static class MessageEndpoints
 {

@@ -1,4 +1,4 @@
-﻿namespace ShadowNetBackend.Features.Communications.Common;
+﻿namespace ShadowNetBackend.Features.Messages.Common;
 
 public record MessageResponse(
     Guid Id,

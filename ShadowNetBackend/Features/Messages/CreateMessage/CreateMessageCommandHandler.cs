@@ -1,6 +1,6 @@
 ﻿using ShadowNetBackend.Features.Agents.GetByIdAgent;
 
-namespace ShadowNetBackend.Features.Communications.CreateMessage;
+namespace ShadowNetBackend.Features.Messages.CreateMessage;
 
 public class CreateMessageCommandHandler : IRequestHandler<CreateMessageCommand, Guid>
 {

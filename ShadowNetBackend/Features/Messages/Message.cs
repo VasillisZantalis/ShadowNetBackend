@@ -1,4 +1,4 @@
-﻿namespace ShadowNetBackend.Features.Communications;
+﻿namespace ShadowNetBackend.Features.Messages;
 
 public class Message
 {
