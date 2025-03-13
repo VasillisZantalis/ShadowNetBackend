@@ -90,12 +90,9 @@ app.MapWitnessEndpoints();
 app.MapSafeHouseEndpoints();
 app.MapMessageEndpoints();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<ChatHub>("/chatHub");
-});
-
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.MapHub<ChatHub>("/chatHub");
 
 if (app.Environment.IsDevelopment())
 {
