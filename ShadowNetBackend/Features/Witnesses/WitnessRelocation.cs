@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Features.SafeHouses;
-
-namespace ShadowNetBackend.Features.Witnesses;
+﻿namespace ShadowNetBackend.Features.Witnesses;
 
 public class WitnessRelocation
 {

@@ -1,7 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Common;
-
-namespace ShadowNetBackend.Features.Witnesses.CreateWitness;
+﻿namespace ShadowNetBackend.Features.Witnesses.CreateWitness;
 
 public class CreateWitnessCommand : IRequest<Guid?>
 {

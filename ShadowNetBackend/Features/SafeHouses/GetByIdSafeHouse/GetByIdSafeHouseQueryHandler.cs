@@ -1,12 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.Agents.Common;
-using ShadowNetBackend.Features.SafeHouses.Common;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
-using ShadowNetBackend.Mappings;
+﻿using ShadowNetBackend.Features.SafeHouses.Common;
 
 namespace ShadowNetBackend.Features.SafeHouses.GetByIdSafeHouse;
 
@@ -23,7 +15,7 @@ public class GetByIdSafeHouseQueryHandler : IRequestHandler<GetByIdSafeHouseQuer
 
     public async Task<SafeHouseResponse> Handle(GetByIdSafeHouseQuery request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Agent}_{request.Id}";
+        string cacheKey = $"{CacheKeys.Agents}_{request.Id}";
 
         var cachedSafeHouse = await _cache.GetDataAsync<SafeHouseResponse>(cacheKey);
         if (cachedSafeHouse is not null)

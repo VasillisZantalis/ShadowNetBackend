@@ -1,12 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Extensions;
-using ShadowNetBackend.Features.Witnesses.Common;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
-using ShadowNetBackend.Mappings;
+﻿using ShadowNetBackend.Features.Witnesses.Common;
 
 namespace ShadowNetBackend.Features.Witnesses.GetAllWitnesses;
 

@@ -1,0 +1,36 @@
+﻿namespace ShadowNetBackend.Features.Communications.CreateMessage;
+
+public class CreateMessageCommandHandler : IRequestHandler<CreateMessageCommand, Guid>
+{
+    private readonly ApplicationDbContext _dbContext;
+    private readonly ICryptographyService _cryptographyService;
+    private readonly ICacheService _cache;
+
+    public CreateMessageCommandHandler(ApplicationDbContext dbContext, ICryptographyService cryptographyService, ICacheService cache)
+    {
+        _dbContext = dbContext;
+        _cryptographyService = cryptographyService;
+        _cache = cache;
+    }
+
+    public async Task<Guid> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
+    {
+        var message = new Message
+        {
+            SenderId = request.SenderId,
+            ReceiverId = request.ReceiverId,
+            Title = request.Title,
+            Content = _cryptographyService.Encrypt(request.Content, EncryptionType.AES),
+            SentAt = DateTime.UtcNow,
+            ExpiresAt = request.AutoDestructTime.HasValue ? DateTimeOffset.UtcNow.Add(request.AutoDestructTime.Value) : null,
+            IsDestroyed = false
+        };
+
+        _dbContext.Messages.Add(message);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        await _cache.RemoveAsync(nameof(CacheKeys.Messages));
+
+        return message.Id;
+    }
+}

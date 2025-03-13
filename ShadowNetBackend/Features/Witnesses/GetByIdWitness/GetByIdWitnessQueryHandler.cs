@@ -1,11 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.Witnesses.Common;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
-using ShadowNetBackend.Mappings;
+﻿using ShadowNetBackend.Features.Witnesses.Common;
 
 namespace ShadowNetBackend.Features.Witnesses.GetByIdWitness;
 
@@ -22,7 +15,7 @@ public class GetByIdWitnessQueryHandler : IRequestHandler<GetByIdWitnessQuery, W
 
     public async Task<WitnessResponse> Handle(GetByIdWitnessQuery request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Witness}_{request.Id}";
+        string cacheKey = $"{CacheKeys.Witnesses}_{request.Id}";
 
         var cachedWitness = await _cache.GetDataAsync<WitnessResponse>(cacheKey);
         if (cachedWitness is not null)

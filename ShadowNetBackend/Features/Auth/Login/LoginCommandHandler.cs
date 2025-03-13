@@ -1,7 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
-using ShadowNetBackend.Features.Agents;
-using ShadowNetBackend.Helpers;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace ShadowNetBackend.Features.Auth.Login;
 

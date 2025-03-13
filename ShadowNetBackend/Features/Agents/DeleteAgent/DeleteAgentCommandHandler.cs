@@ -1,9 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.Agents.GetByIdAgent;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
+﻿using ShadowNetBackend.Features.Agents.GetByIdAgent;
 
 namespace ShadowNetBackend.Features.Agents.DeleteAgent;
 
@@ -22,7 +17,7 @@ public class DeleteAgentCommandHandler : IRequestHandler<DeleteAgentCommand, boo
 
     public async Task<bool> Handle(DeleteAgentCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Agent}_{request.Id}";
+        string cacheKey = $"{CacheKeys.Agents}_{request.Id}";
 
         await _sender.Send(new GetByIdAgentQuery(request.Id), cancellationToken);
 

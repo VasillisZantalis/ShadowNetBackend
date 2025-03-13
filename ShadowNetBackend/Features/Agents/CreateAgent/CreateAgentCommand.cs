@@ -1,7 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Common;
-
-namespace ShadowNetBackend.Features.Agents.CreateAgent;
+﻿namespace ShadowNetBackend.Features.Agents.CreateAgent;
 
 public class CreateAgentCommand : IRequest<Guid?>
 {

@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.Agents.Common;
 using ShadowNetBackend.Features.Missions.Common;
 using ShadowNetBackend.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
@@ -26,7 +24,7 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
 
     public async Task<MissionResponse> Handle(GetByIdMissionQuery request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Mission}_{request.Id}";
+        string cacheKey = $"{CacheKeys.Missions}_{request.Id}";
 
         var cachedMission = await _cache.GetDataAsync<MissionResponse>(cacheKey);
         if (cachedMission is not null)
@@ -44,7 +42,7 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
 
         var encryptionType = request.EncryptionType ?? EncryptionType.None;
 
-        var missionResponse =  new MissionResponse
+        var missionResponse = new MissionResponse
         {
             Id = mission.Id,
             Title = mission.Title,

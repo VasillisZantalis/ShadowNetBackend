@@ -1,7 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Common;
-
-namespace ShadowNetBackend.Features.Witnesses.UpdateWitness;
+﻿namespace ShadowNetBackend.Features.Witnesses.UpdateWitness;
 
 public record UpdateWitnessCommand(
     Guid Id,

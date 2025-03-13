@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Common;
-
-namespace ShadowNetBackend.Features.Witnesses.Common;
+﻿namespace ShadowNetBackend.Features.Witnesses.Common;
 
 public record WitnessResponse(
     Guid Id,

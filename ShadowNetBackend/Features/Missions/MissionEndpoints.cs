@@ -1,6 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using ShadowNetBackend.Common;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShadowNetBackend.Features.Missions.Common;
 using ShadowNetBackend.Features.Missions.CreateMission;
 using ShadowNetBackend.Features.Missions.DeleteMission;
@@ -33,10 +31,10 @@ public static class MissionEndpoints
     }
 
     private static async Task<IResult> GetMissionById(
-        Guid id, 
-        [FromQuery] EncryptionType? encryptionType, 
-        [FromQuery] string? encryptionKey, 
-        ISender sender, 
+        Guid id,
+        [FromQuery] EncryptionType? encryptionType,
+        [FromQuery] string? encryptionKey,
+        ISender sender,
         CancellationToken cancellation)
     {
         var mission = await sender.Send(new GetByIdMissionQuery(id, encryptionType, encryptionKey), cancellation);

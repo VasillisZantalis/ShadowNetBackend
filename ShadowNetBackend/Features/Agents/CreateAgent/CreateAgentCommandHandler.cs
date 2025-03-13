@@ -1,9 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Helpers;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace ShadowNetBackend.Features.Agents.CreateAgent;
 
@@ -44,7 +39,7 @@ public class CreateAgentCommandHandler : IRequestHandler<CreateAgentCommand, Gui
 
         await _userManager.AddToRoleAsync(user, request.Rank.ToString());
 
-        _dbContext.Agents.Attach(user);
+        _dbContext.Agents.Add(user);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         await _cache.RemoveAsync(nameof(CacheKeys.Agents));

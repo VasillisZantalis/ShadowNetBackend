@@ -22,7 +22,7 @@ public class GetByIdAgentQueryHandler : IRequestHandler<GetByIdAgentQuery, Agent
 
     public async Task<AgentResponse> Handle(GetByIdAgentQuery request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Agent}_{request.Id}";
+        string cacheKey = $"{CacheKeys.Agents}_{request.Id}";
 
         var cachedAgent = await _cache.GetDataAsync<AgentResponse>(cacheKey);
         if (cachedAgent is not null)

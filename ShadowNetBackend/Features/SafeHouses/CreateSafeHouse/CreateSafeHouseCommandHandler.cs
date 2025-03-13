@@ -1,9 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
-
-namespace ShadowNetBackend.Features.SafeHouses.CreateSafeHouse;
+﻿namespace ShadowNetBackend.Features.SafeHouses.CreateSafeHouse;
 
 public class CreateSafeHouseCommandHandler : IRequestHandler<CreateSafeHouseCommand, int>
 {

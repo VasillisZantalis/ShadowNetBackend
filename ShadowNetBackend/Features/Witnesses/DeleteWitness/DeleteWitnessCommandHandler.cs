@@ -1,9 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.Witnesses.GetByIdWitness;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
+﻿using ShadowNetBackend.Features.Witnesses.GetByIdWitness;
 
 namespace ShadowNetBackend.Features.Witnesses.DeleteWitness;
 
@@ -22,7 +17,7 @@ public class DeleteWitnessCommandHandler : IRequestHandler<DeleteWitnessCommand,
 
     public async Task<bool> Handle(DeleteWitnessCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Witness}_{request.Id}";
+        string cacheKey = $"{CacheKeys.Witnesses}_{request.Id}";
 
         await _sender.Send(new GetByIdWitnessQuery(request.Id), cancellationToken);
 

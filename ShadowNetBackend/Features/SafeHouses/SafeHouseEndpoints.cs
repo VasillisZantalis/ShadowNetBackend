@@ -1,7 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.SafeHouses.Common;
+﻿using ShadowNetBackend.Features.SafeHouses.Common;
 using ShadowNetBackend.Features.SafeHouses.CreateSafeHouse;
 using ShadowNetBackend.Features.SafeHouses.DeleteSafeHouse;
 using ShadowNetBackend.Features.SafeHouses.GetAllSafeHouse;

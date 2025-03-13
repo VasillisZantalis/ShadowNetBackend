@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.Agents;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

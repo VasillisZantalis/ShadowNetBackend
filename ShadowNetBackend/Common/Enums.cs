@@ -43,11 +43,8 @@ public enum SortingOrder
 public enum CacheKeys
 {
     Agents,
-    Agent,
     Missions,
-    Mission,
     Witnesses,
-    Witness,
     SafeHouses,
-    SafeHouse
+    Messages,
 }

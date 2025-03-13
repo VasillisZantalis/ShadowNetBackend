@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Features.Witnesses;
-
-namespace ShadowNetBackend.Features.SafeHouses;
+﻿namespace ShadowNetBackend.Features.SafeHouses;
 
 public class SafeHouse
 {

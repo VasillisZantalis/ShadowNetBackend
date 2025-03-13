@@ -1,5 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Features.SafeHouses.Common;
+﻿using ShadowNetBackend.Features.SafeHouses.Common;
 
 namespace ShadowNetBackend.Features.SafeHouses.GetAllSafeHouse;
 

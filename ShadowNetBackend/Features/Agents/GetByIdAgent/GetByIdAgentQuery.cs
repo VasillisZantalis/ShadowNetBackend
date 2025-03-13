@@ -1,5 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Features.Agents.Common;
+﻿using ShadowNetBackend.Features.Agents.Common;
 
 namespace ShadowNetBackend.Features.Agents.GetByIdAgent;
 

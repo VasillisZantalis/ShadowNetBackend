@@ -1,10 +1,5 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.Agents.GetByIdAgent;
+﻿using ShadowNetBackend.Features.Agents.GetByIdAgent;
 using ShadowNetBackend.Features.Missions.GetByIdMission;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
 
 namespace ShadowNetBackend.Features.Agents.UpdateAgent;
 
@@ -39,7 +34,7 @@ public class UpdateAgentCommandHandler : IRequestHandler<UpdateAgentCommand, boo
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync($"{CacheKeys.Agent}_{request.Id}");
+        await _cache.RemoveAsync($"{CacheKeys.Agents}_{request.Id}");
 
         return true;
     }

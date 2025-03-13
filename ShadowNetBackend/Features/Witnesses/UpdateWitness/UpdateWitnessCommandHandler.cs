@@ -1,11 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.Missions.GetByIdMission;
-using ShadowNetBackend.Features.Witnesses.GetByIdWitness;
-using ShadowNetBackend.Helpers;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
+﻿using ShadowNetBackend.Features.Witnesses.GetByIdWitness;
 
 namespace ShadowNetBackend.Features.Witnesses.UpdateWitness;
 
@@ -24,7 +17,7 @@ public class UpdateWitnessCommandHandler : IRequestHandler<UpdateWitnessCommand,
 
     public async Task<bool> Handle(UpdateWitnessCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Witness}_{request.Id}";
+        string cacheKey = $"{CacheKeys.Witnesses}_{request.Id}";
 
         await _sender.Send(new GetByIdWitnessQuery(request.Id), cancellationToken);
 

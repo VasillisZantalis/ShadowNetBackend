@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Communications\" />
     <Folder Include="Features\IntelBriefings\" />
     <Folder Include="Features\Reports\" />
   </ItemGroup>

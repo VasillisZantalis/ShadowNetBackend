@@ -1,0 +1,16 @@
+﻿global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using ShadowNetBackend.Common;
+global using ShadowNetBackend.Features.Communications.Common;
+global using ShadowNetBackend.Infrastructure.Data;
+global using ShadowNetBackend.Infrastructure.Interfaces;
+global using ShadowNetBackend.Extensions;
+global using ShadowNetBackend.Features.Agents;
+global using ShadowNetBackend.Features.Auth;
+global using ShadowNetBackend.Features.Communications;
+global using ShadowNetBackend.Features.Missions;
+global using ShadowNetBackend.Features.SafeHouses;
+global using ShadowNetBackend.Features.Witnesses;
+global using ShadowNetBackend.Helpers;
+global using ShadowNetBackend.Infrastructure;
+global using ShadowNetBackend.Mappings;

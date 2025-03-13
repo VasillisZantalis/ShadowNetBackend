@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace ShadowNetBackend.Extensions;
+﻿namespace ShadowNetBackend.Extensions;
 
 public static class DbContextExtensions
 {

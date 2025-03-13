@@ -1,10 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Helpers;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
-
-namespace ShadowNetBackend.Features.Witnesses.CreateWitness;
+﻿namespace ShadowNetBackend.Features.Witnesses.CreateWitness;
 
 public class CreateWitnessCommandHandler : IRequestHandler<CreateWitnessCommand, Guid?>
 {

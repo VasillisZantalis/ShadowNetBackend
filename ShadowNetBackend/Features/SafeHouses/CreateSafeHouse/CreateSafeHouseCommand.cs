@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace ShadowNetBackend.Features.SafeHouses.CreateSafeHouse;
+﻿namespace ShadowNetBackend.Features.SafeHouses.CreateSafeHouse;
 
 public record CreateSafeHouseCommand(
     string Location,

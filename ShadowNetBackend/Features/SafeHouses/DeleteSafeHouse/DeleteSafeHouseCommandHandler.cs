@@ -1,8 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.SafeHouses.GetByIdSafeHouse;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
+﻿using ShadowNetBackend.Features.SafeHouses.GetByIdSafeHouse;
 
 namespace ShadowNetBackend.Features.SafeHouses.DeleteSafeHouse;
 
@@ -21,7 +17,7 @@ public class DeleteSafeHouseCommandHandler : IRequestHandler<DeleteSafeHouseComm
 
     public async Task<bool> Handle(DeleteSafeHouseCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.SafeHouse}_{request.Id}";
+        string cacheKey = $"{CacheKeys.SafeHouses}_{request.Id}";
 
         await _sender.Send(new GetByIdSafeHouseQuery(request.Id), cancellationToken);
 

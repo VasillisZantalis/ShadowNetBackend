@@ -1,5 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Features.Auth.Login;
+﻿using ShadowNetBackend.Features.Auth.Login;
 
 namespace ShadowNetBackend.Features.Auth;
 

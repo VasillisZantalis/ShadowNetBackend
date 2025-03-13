@@ -1,9 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.SafeHouses.GetByIdSafeHouse;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
+﻿using ShadowNetBackend.Features.SafeHouses.GetByIdSafeHouse;
 
 namespace ShadowNetBackend.Features.SafeHouses.UpdateSafeHouse;
 
@@ -33,7 +28,7 @@ public class UpdateSafeHouseCommandHandler : IRequestHandler<UpdateSafeHouseComm
         _dbContext.SafeHouses.Update(safeHouse);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync($"{CacheKeys.SafeHouse}_{request.Id}");
+        await _cache.RemoveAsync($"{CacheKeys.SafeHouses}_{request.Id}");
 
         return true;
     }

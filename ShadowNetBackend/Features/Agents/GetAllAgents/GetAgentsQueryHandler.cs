@@ -1,12 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Extensions;
-using ShadowNetBackend.Features.Agents.Common;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
-using ShadowNetBackend.Mappings;
+﻿using ShadowNetBackend.Features.Agents.Common;
 
 namespace ShadowNetBackend.Features.Agents.GetAllAgents;
 

@@ -1,5 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Features.Witnesses.Common;
+﻿using ShadowNetBackend.Features.Witnesses.Common;
 using ShadowNetBackend.Features.Witnesses.CreateWitness;
 using ShadowNetBackend.Features.Witnesses.DeleteWitness;
 using ShadowNetBackend.Features.Witnesses.GetAllWitnesses;

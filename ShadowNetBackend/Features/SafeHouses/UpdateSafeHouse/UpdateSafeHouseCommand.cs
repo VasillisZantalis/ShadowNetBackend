@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace ShadowNetBackend.Features.SafeHouses.UpdateSafeHouse;
+﻿namespace ShadowNetBackend.Features.SafeHouses.UpdateSafeHouse;
 
 public record UpdateSafeHouseCommand(
     int Id,

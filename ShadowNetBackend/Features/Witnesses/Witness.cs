@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Common;
-
-namespace ShadowNetBackend.Features.Witnesses;
+﻿namespace ShadowNetBackend.Features.Witnesses;
 
 public class Witness
 {

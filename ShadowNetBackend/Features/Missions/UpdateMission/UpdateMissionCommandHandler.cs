@@ -23,7 +23,7 @@ public class UpdateMissionCommandHandler : IRequestHandler<UpdateMissionCommand,
 
     public async Task<bool> Handle(UpdateMissionCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Mission}_{request.Id}";
+        string cacheKey = $"{CacheKeys.Missions}_{request.Id}";
 
         await _sender.Send(new GetByIdMissionQuery(request.Id, null, null), cancellationToken);
 
