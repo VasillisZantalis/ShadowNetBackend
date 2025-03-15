@@ -33,10 +33,12 @@ public class JwtHelper
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
             claims: claims,
-            expires: DateTime.Now.AddDays(1),
+            expires: DateTime.Now.AddMinutes(15),
             signingCredentials: creds
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
+    public string GenerateRefreshToken() => Guid.NewGuid().ToString();
 }

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using ShadowNetBackend.Common;
 using System.Text.Json;
 
-namespace ShadowNetBackend.Infrastructure.Interfaces;
+namespace ShadowNetBackend.Infrastructure;
 
 public class CacheService : ICacheService
 {

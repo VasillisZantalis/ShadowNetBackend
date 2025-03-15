@@ -1,4 +1,6 @@
-﻿using ShadowNetBackend.Features.Auth.Login;
+﻿using Newtonsoft.Json.Linq;
+using ShadowNetBackend.Features.Auth.Login;
+using ShadowNetBackend.Features.Auth.RefreshToken;
 
 namespace ShadowNetBackend.Features.Auth;
 
@@ -9,6 +11,7 @@ public static class AuthEndpoints
         var group = app.MapGroup("/api/auth");
 
         group.MapPost("/login", Login).WithName("login");
+        group.MapPost("/refresh-token", RefreshToken).WithName("refresh-token");
     }
 
     private static async Task<IResult> Login(LoginCommand command, ISender sender, CancellationToken cancellationToken)
@@ -17,6 +20,14 @@ public static class AuthEndpoints
 
         return token is null
             ? TypedResults.BadRequest("Failed attempt to login")
-            : TypedResults.Ok(new { Token = token });
+            : TypedResults.Ok(token);
+    }
+
+    private static async Task<IResult> RefreshToken(RefreshTokenCommand command, ISender sender, CancellationToken cancellationToken)
+    {
+        var token = await sender.Send(command, cancellationToken);
+        return token is null
+            ? TypedResults.BadRequest("Invalid refresh token")
+            : TypedResults.Ok(new { AccessToken = token });
     }
 }

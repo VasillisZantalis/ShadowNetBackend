@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShadowNetBackend.Common;
 using ShadowNetBackend.Features.Agents;
+using ShadowNetBackend.Features.Auth.RefreshToken;
 using ShadowNetBackend.Features.Messages;
 using ShadowNetBackend.Features.Missions;
 using ShadowNetBackend.Features.SafeHouses;
@@ -21,6 +22,7 @@ public class ApplicationDbContext : IdentityDbContext<Agent>
     public DbSet<Witness> Witnesses { get; set; } = null!;
     public DbSet<WitnessRelocation> WitnessRelocations { get; set; } = null!;
     public DbSet<Message> Messages { get; set; } = null!;
+    public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
