@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Common;
-
-namespace ShadowNetBackend.Features.Agents.Common;
+﻿namespace ShadowNetBackend.Features.Agents.Common;
 
 public class AgentParameters : QueryStringParameters
 {
