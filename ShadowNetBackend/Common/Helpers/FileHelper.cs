@@ -1,4 +1,4 @@
-﻿namespace ShadowNetBackend.Helpers;
+﻿namespace ShadowNetBackend.Common.Helpers;
 
 public static class FileHelper
 {

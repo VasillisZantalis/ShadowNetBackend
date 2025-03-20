@@ -1,4 +1,6 @@
-﻿namespace ShadowNetBackend.Features.Witnesses.CreateWitness;
+﻿using ShadowNetBackend.Common.Helpers;
+
+namespace ShadowNetBackend.Features.Witnesses.CreateWitness;
 
 public class CreateWitnessCommandHandler : IRequestHandler<CreateWitnessCommand, Guid?>
 {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using ShadowNetBackend.Common;
-using ShadowNetBackend.Helpers;
+using ShadowNetBackend.Common.Helpers;
 using ShadowNetBackend.Infrastructure.Data;
 using ShadowNetBackend.Infrastructure.Interfaces;
 

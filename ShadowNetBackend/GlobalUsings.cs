@@ -11,6 +11,6 @@ global using ShadowNetBackend.Features.Communications;
 global using ShadowNetBackend.Features.Missions;
 global using ShadowNetBackend.Features.SafeHouses;
 global using ShadowNetBackend.Features.Witnesses;
-global using ShadowNetBackend.Helpers;
+global using ShadowNetBackend.Common.Helpers;
 global using ShadowNetBackend.Infrastructure;
 global using ShadowNetBackend.Mappings;

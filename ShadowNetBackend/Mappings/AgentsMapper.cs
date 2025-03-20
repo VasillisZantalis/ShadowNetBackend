@@ -1,6 +1,6 @@
-﻿using ShadowNetBackend.Features.Agents;
+﻿using ShadowNetBackend.Common.Helpers;
+using ShadowNetBackend.Features.Agents;
 using ShadowNetBackend.Features.Agents.Common;
-using ShadowNetBackend.Helpers;
 
 namespace ShadowNetBackend.Mappings;
 

@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Features\IntelBriefings\" />
+    <Folder Include="Features\Criminals\" />
     <Folder Include="Features\Reports\" />
   </ItemGroup>
 
