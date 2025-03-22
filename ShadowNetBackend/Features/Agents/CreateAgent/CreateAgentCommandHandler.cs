@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ShadowNetBackend.Common.Helpers;
+using ShadowNetBackend.Exceptions;
+using ShadowNetBackend.Features.Agents.Common;
 
 namespace ShadowNetBackend.Features.Agents.CreateAgent;
 
@@ -36,11 +38,17 @@ public class CreateAgentCommandHandler : IRequestHandler<CreateAgentCommand, Gui
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)
-            return null;
+        {
+            var errors = result.Errors
+                   .GroupBy(e => e.Code)
+                   .ToDictionary(
+                       g => g.Key,
+                       g => g.Select(e => e.Description).ToArray()
+                   );
+            throw new ValidationException(errors);
+        }
 
         await _userManager.AddToRoleAsync(user, request.Rank.ToString());
-
-        _dbContext.Agents.Add(user);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         await _cache.RemoveAsync(nameof(CacheKeys.Agents));

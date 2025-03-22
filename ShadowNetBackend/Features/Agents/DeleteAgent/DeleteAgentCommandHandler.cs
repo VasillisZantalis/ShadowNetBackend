@@ -26,7 +26,7 @@ public class DeleteAgentCommandHandler : IRequestHandler<DeleteAgentCommand, boo
         _dbContext.Agents.Remove(agent!);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync(cacheKey);
+        await _cache.RemoveAsync(nameof(CacheKeys.Agents));
 
         return true;
     }

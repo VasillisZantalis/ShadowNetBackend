@@ -15,6 +15,6 @@ public class CreateAgentValidator : AbstractValidator<CreateAgentCommand>
             .MaximumLength(250).WithMessage("Last name must not exceed 250 characters");
 
         RuleFor(x => x.ClearanceLevel)
-            .NotEmpty().WithMessage("Clearance Level is required");
+            .NotNull().WithMessage("Clearance Level is required");
     }
 }
