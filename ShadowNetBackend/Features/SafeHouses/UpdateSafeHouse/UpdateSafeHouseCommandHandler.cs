@@ -28,7 +28,7 @@ public class UpdateSafeHouseCommandHandler : IRequestHandler<UpdateSafeHouseComm
         _dbContext.SafeHouses.Update(safeHouse);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync($"{CacheKeys.SafeHouses}_{request.Id}");
+        await _cache.RemoveAsync(nameof(CacheKeys.SafeHouses));
 
         return true;
     }

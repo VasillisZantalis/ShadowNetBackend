@@ -17,8 +17,6 @@ public class DeleteMissionCommandHandler : IRequestHandler<DeleteMissionCommand,
 
     public async Task<bool> Handle(DeleteMissionCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Missions}_{request.Id}";
-
         await _sender.Send(new GetByIdMissionQuery(request.Id, null, null), cancellationToken);
 
         var mission = await _dbContext.Missions.FindAsync(request.Id);
@@ -26,7 +24,7 @@ public class DeleteMissionCommandHandler : IRequestHandler<DeleteMissionCommand,
         _dbContext.Missions.Remove(mission!);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync(cacheKey);
+        await _cache.RemoveAsync(nameof(CacheKeys.Missions));
 
         return true;
     }

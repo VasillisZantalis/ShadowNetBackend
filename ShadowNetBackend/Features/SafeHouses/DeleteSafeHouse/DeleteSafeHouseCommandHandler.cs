@@ -17,8 +17,6 @@ public class DeleteSafeHouseCommandHandler : IRequestHandler<DeleteSafeHouseComm
 
     public async Task<bool> Handle(DeleteSafeHouseCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.SafeHouses}_{request.Id}";
-
         await _sender.Send(new GetByIdSafeHouseQuery(request.Id), cancellationToken);
 
         var SafeHouse = await _dbContext.SafeHouses.FindAsync(request.Id);
@@ -26,7 +24,7 @@ public class DeleteSafeHouseCommandHandler : IRequestHandler<DeleteSafeHouseComm
         _dbContext.SafeHouses.Remove(SafeHouse!);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync(cacheKey);
+        await _cache.RemoveAsync(nameof(CacheKeys.SafeHouses));
 
         return true;
     }

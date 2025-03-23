@@ -31,7 +31,7 @@ public class CreateWitnessCommandHandler : IRequestHandler<CreateWitnessCommand,
         _dbContext.Witnesses.Add(witness);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync($"{CacheKeys.Witnesses}");
+        await _cache.RemoveAsync(nameof(CacheKeys.Witnesses));
 
         return witness.Id;
     }

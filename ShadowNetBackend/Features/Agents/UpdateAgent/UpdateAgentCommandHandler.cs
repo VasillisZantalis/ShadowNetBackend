@@ -34,7 +34,7 @@ public class UpdateAgentCommandHandler : IRequestHandler<UpdateAgentCommand, boo
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync($"{CacheKeys.Agents}_{request.Id}");
+        await _cache.RemoveAsync(nameof(CacheKeys.Agents));
 
         return true;
     }

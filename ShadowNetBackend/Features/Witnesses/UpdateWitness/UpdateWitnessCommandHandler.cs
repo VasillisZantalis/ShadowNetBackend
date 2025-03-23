@@ -7,19 +7,15 @@ public class UpdateWitnessCommandHandler : IRequestHandler<UpdateWitnessCommand,
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly ISender _sender;
-    private readonly ICacheService _cache;
 
-    public UpdateWitnessCommandHandler(ApplicationDbContext dbContext, ISender sender, ICacheService cache)
+    public UpdateWitnessCommandHandler(ApplicationDbContext dbContext, ISender sender)
     {
         _dbContext = dbContext;
         _sender = sender;
-        _cache = cache;
     }
 
     public async Task<bool> Handle(UpdateWitnessCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Witnesses}_{request.Id}";
-
         await _sender.Send(new GetByIdWitnessQuery(request.Id), cancellationToken);
 
         var witness = await _dbContext.Witnesses.FirstOrDefaultAsync(w => w.Id == request.Id, cancellationToken);
@@ -34,7 +30,7 @@ public class UpdateWitnessCommandHandler : IRequestHandler<UpdateWitnessCommand,
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync(cacheKey);
+        await _cache.RemoveAsync(nameof(CacheKeys.Witnesses));
 
         return true;
     }

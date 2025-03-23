@@ -17,8 +17,6 @@ public class DeleteWitnessCommandHandler : IRequestHandler<DeleteWitnessCommand,
 
     public async Task<bool> Handle(DeleteWitnessCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Witnesses}_{request.Id}";
-
         await _sender.Send(new GetByIdWitnessQuery(request.Id), cancellationToken);
 
         var witness = await _dbContext.Witnesses.FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
@@ -26,7 +24,7 @@ public class DeleteWitnessCommandHandler : IRequestHandler<DeleteWitnessCommand,
         _dbContext.Witnesses.Remove(witness!);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync(cacheKey);
+        await _cache.RemoveAsync(nameof(CacheKeys.Witnesses));
 
         return true;
     }

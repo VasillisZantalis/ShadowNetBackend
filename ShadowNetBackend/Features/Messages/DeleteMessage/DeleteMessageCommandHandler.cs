@@ -17,8 +17,6 @@ public class DeleteMessageCommandHandler : IRequestHandler<DeleteMessageCommand,
 
     public async Task<bool> Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Messages}_{request.Id}";
-
         await _sender.Send(new GetByIdMessageQuery(request.Id), cancellationToken);
 
         var message = await _dbContext.Messages.FindAsync(request.Id);
@@ -26,7 +24,7 @@ public class DeleteMessageCommandHandler : IRequestHandler<DeleteMessageCommand,
         _dbContext.Messages.Remove(message!);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _cache.RemoveAsync(cacheKey);
+        await _cache.RemoveAsync(nameof(CacheKeys.Messages));
 
         return true;
     }

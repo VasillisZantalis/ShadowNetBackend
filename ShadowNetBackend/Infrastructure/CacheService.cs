@@ -19,7 +19,17 @@ public class CacheService : ICacheService
     public async Task<T?> GetDataAsync<T>(string key)
     {
         var cachedData = await _cache.GetStringAsync(key);
-        return cachedData is not null ? JsonSerializer.Deserialize<T>(cachedData) : default;
+        if (cachedData is null) return default;
+
+        try
+        {
+            return JsonSerializer.Deserialize<T>(cachedData);
+        }
+        catch (JsonException)
+        {
+            await _cache.RemoveAsync(key);
+            return default;
+        }
     }
 
     public async Task RemoveAsync(string key)

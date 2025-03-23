@@ -13,25 +13,15 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly ICryptographyService _cryptographyService;
-    private readonly ICacheService _cache;
 
-    public GetByIdMissionQueryHandler(ApplicationDbContext dbContext, ICryptographyService cryptographyService, ICacheService cache)
+    public GetByIdMissionQueryHandler(ApplicationDbContext dbContext, ICryptographyService cryptographyService)
     {
         _dbContext = dbContext;
         _cryptographyService = cryptographyService;
-        _cache = cache;
     }
 
     public async Task<MissionResponse> Handle(GetByIdMissionQuery request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Missions}_{request.Id}";
-
-        var cachedMission = await _cache.GetDataAsync<MissionResponse>(cacheKey);
-        if (cachedMission is not null)
-        {
-            return cachedMission;
-        }
-
         var mission = await _dbContext.Missions
             .AsNoTracking()
             .Include(x => x.AssignedAgents)
@@ -60,8 +50,6 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
             Date = mission.Date,
             AssignedAgents = mission.AssignedAgents.Select(x => x.ToAgentResponse()).ToList()
         };
-
-        await _cache.SetAsync(cacheKey, missionResponse, TimeSpan.FromMinutes(15));
 
         return missionResponse;
     }
