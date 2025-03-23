@@ -7,11 +7,13 @@ public class UpdateWitnessCommandHandler : IRequestHandler<UpdateWitnessCommand,
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly ISender _sender;
+    private readonly ICacheService _cache;
 
-    public UpdateWitnessCommandHandler(ApplicationDbContext dbContext, ISender sender)
+    public UpdateWitnessCommandHandler(ApplicationDbContext dbContext, ISender sender, ICacheService cache)
     {
         _dbContext = dbContext;
         _sender = sender;
+        _cache = cache;
     }
 
     public async Task<bool> Handle(UpdateWitnessCommand request, CancellationToken cancellationToken)
