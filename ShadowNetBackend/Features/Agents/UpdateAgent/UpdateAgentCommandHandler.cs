@@ -31,6 +31,7 @@ public class UpdateAgentCommandHandler : IRequestHandler<UpdateAgentCommand, boo
         agent.Specialization = request.Specialization;
         agent.ClearanceLevel = request.ClearanceLevel;
         agent.MissionId = request.MissionId;
+        agent.Image = request.Image is null ? null : FileHelper.ConvertFromBase64(request.Image);
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 

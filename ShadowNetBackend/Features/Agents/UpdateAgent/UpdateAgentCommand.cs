@@ -7,4 +7,5 @@ public record UpdateAgentCommand(
     string? Alias,
     string? Specialization,
     ClearanceLevel ClearanceLevel,
-    Guid? MissionId) : IRequest<bool>;
+    Guid? MissionId,
+    string? Image) : IRequest<bool>;
