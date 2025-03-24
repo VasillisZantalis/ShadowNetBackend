@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using ShadowNetBackend.Common;
 using ShadowNetBackend.Common.Helpers;
 using ShadowNetBackend.Extensions;
+using ShadowNetBackend.Features.Agents;
 using ShadowNetBackend.Features.Agents.Common;
 using ShadowNetBackend.Features.Missions.Common;
 using ShadowNetBackend.Infrastructure.Data;
@@ -31,6 +32,7 @@ public class GetMissionsQueryHandler : IRequestHandler<GetMissionsQuery, IEnumer
         }
 
         var query = _dbContext.Missions.AsQueryable()
+            .Include(i => i.AssignedAgents)
             .ApplySorting(request.Parameters.OrderBy)
             .ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
@@ -57,7 +59,15 @@ public class GetMissionsQueryHandler : IRequestHandler<GetMissionsQuery, IEnumer
             Location = mission.Location,
             Status = mission.Status,
             Risk = mission.Risk,
-            Date = mission.Date
+            Date = mission.Date,
+            AssignedAgents = mission.AssignedAgents
+            .Select(s => new AgentResponse
+            {
+                Id = Guid.Parse(s.Id),
+                FirstName = s.FirstName,
+                LastName = s.LastName,
+                Image = s.Image != null ? FileHelper.ConvertToBase64(s.Image) : null,
+            })
         }).ToList();
 
         await _cache.SetAsync(nameof(CacheKeys.Missions), missionResponses, TimeSpan.FromMinutes(15));
