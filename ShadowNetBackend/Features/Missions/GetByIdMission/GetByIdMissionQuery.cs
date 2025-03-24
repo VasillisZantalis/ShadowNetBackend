@@ -1,6 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.Missions.Common;
+﻿using ShadowNetBackend.Features.Missions.Common;
 
 namespace ShadowNetBackend.Features.Missions.GetByIdMission;
 

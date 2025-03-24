@@ -1,7 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Common;
-
-namespace ShadowNetBackend.Features.Missions.UpdateMission;
+﻿namespace ShadowNetBackend.Features.Missions.UpdateMission;
 
 public record UpdateMissionCommand(
     Guid Id,

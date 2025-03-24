@@ -1,7 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Common;
-
-namespace ShadowNetBackend.Features.Missions.CreateMission;
+﻿namespace ShadowNetBackend.Features.Missions.CreateMission;
 
 public class CreateMissionCommand : IRequest<Guid>
 {

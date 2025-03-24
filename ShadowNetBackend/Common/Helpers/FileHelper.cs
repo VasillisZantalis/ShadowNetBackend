@@ -28,11 +28,14 @@ public static class FileHelper
 
     public static string ConvertToBase64(byte[] fileBytes)
     {
-        return Convert.ToBase64String(fileBytes);
+        return $"data:jpg;base64,{Convert.ToBase64String(fileBytes)}";
     }
 
     public static byte[] ConvertFromBase64(string base64String)
     {
+        if (base64String.Contains(","))
+            base64String = base64String.Split(',')[1];
+
         return Convert.FromBase64String(base64String);
     }
 }

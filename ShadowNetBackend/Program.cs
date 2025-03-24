@@ -7,6 +7,7 @@ using Scalar.AspNetCore;
 using ShadowNetBackend.Behaviors;
 using ShadowNetBackend.Common.Helpers;
 using ShadowNetBackend.Features.Messages;
+using ShadowNetBackend.Features.Security.DecryptField;
 using ShadowNetBackend.Middleware;
 using System.Reflection;
 using System.Text;
@@ -90,6 +91,7 @@ app.MapMissionEndpoints();
 app.MapWitnessEndpoints();
 app.MapSafeHouseEndpoints();
 app.MapMessageEndpoints();
+app.MapDecryptFieldEndpoints();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
