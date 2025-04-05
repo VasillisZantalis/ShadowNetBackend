@@ -9,12 +9,28 @@ public static class MessageEndpoints
 {
     public static void MapMessageEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/messages");
+        var group = app.MapGroup("/api/messages").WithTags("Messages");
 
-        group.MapGet("", GetAllMessages).WithName("GetAllMessages");
-        group.MapGet("/{id:guid}", GetMessageById).WithName("GetMessageById");
-        group.MapPost("", CreateMessage).WithName("CreateMessage");
-        group.MapDelete("/{id:guid}", DeleteMessage).WithName("DeleteMessage");
+        group.MapGet("", GetAllMessages)
+            .WithName("GetAllMessages")
+            .Produces<IEnumerable<MessageResponse>>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest);
+
+        group.MapGet("/{id:guid}", GetMessageById)
+            .WithName("GetMessageById")
+            .Produces<MessageResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPost("", CreateMessage)
+            .WithName("CreateMessage")
+            .Produces<Guid>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapDelete("/{id:guid}", DeleteMessage)
+            .WithName("DeleteMessage")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound);
     }
 
     private static async Task<IResult> GetAllMessages([AsParameters] MessageParameters parameters, ISender sender, CancellationToken cancellationToken)

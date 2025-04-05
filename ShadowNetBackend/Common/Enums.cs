@@ -47,4 +47,5 @@ public enum CacheKeys
     Witnesses,
     SafeHouses,
     Messages,
+    Criminals
 }

@@ -12,13 +12,34 @@ public static class MissionEndpoints
 {
     public static void MapMissionEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/missions");
+        var group = app.MapGroup("/api/missions").WithTags("Missions");
 
-        group.MapGet("", GetAllMissions).WithName("GetAllMissions");
-        group.MapGet("/{id:guid}", GetMissionById).WithName("GetMissionById");
-        group.MapPost("", CreateMission).WithName("CreateMission");
-        group.MapPut("/{id:guid}", UpdateMission).WithName("UpdateMission");
-        group.MapDelete("/{id:guid}", DeleteMission).WithName("DeleteMission");
+        group.MapGet("", GetAllMissions)
+            .WithName("GetAllMissions")
+            .Produces<IEnumerable<MissionResponse>>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest);
+
+        group.MapGet("/{id:guid}", GetMissionById)
+            .WithName("GetMissionById")
+            .Produces<MissionResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPost("", CreateMission)
+            .WithName("CreateMission")
+            .Produces<Guid>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPut("/{id:guid}", UpdateMission)
+            .WithName("UpdateMission")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapDelete("/{id:guid}", DeleteMission)
+            .WithName("DeleteMission")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound);
     }
 
     private static async Task<IResult> GetAllMissions([AsParameters] MissionParameters parameters, ISender sender, CancellationToken cancellationToken)

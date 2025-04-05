@@ -11,13 +11,34 @@ public static class SafeHouseEndpoints
 {
     public static void MapSafeHouseEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/SafeHouses");
+        var group = app.MapGroup("/api/SafeHouses").WithTags("SafeHouses");
 
-        group.MapGet("", GetAllSafeHouses).WithName("GetAllSafeHouses");
-        group.MapGet("/{id:int}", GetSafeHouseById).WithName("GetSafeHouseById");
-        group.MapPost("", CreateSafeHouse).WithName("CreateSafeHouse");
-        group.MapPut("/{id:int}", UpdateSafeHouse).WithName("UpdateSafeHouse");
-        group.MapDelete("/{id:int}", DeleteSafeHouse).WithName("DeleteSafeHouse");
+        group.MapGet("", GetAllSafeHouses)
+            .WithName("GetAllSafeHouses")
+            .Produces<IEnumerable<SafeHouse>>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest);
+
+        group.MapGet("/{id:int}", GetSafeHouseById)
+            .WithName("GetSafeHouseById")
+            .Produces<SafeHouse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPost("", CreateSafeHouse)
+            .WithName("CreateSafeHouse")
+            .Produces<int>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPut("/{id:int}", UpdateSafeHouse)
+            .WithName("UpdateSafeHouse")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapDelete("/{id:int}", DeleteSafeHouse)
+            .WithName("DeleteSafeHouse")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound);
     }
 
     private static async Task<IResult> GetAllSafeHouses([AsParameters] SafeHouseParameters parameters, ISender sender, CancellationToken cancellationToken)

@@ -27,30 +27,20 @@ public class GetMessagesQueryHandler : IRequestHandler<GetMessagesQuery, IEnumer
             .ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
         if (request.Parameters.FromDate.HasValue)
-        {
             query = query.Where(w => w.SentAt >= request.Parameters.FromDate.Value);
-        }
 
         if (request.Parameters.ToDate.HasValue)
-        {
             query = query.Where(w => w.SentAt <= request.Parameters.ToDate.Value);
-        }
 
         if (request.Parameters.SenderId.HasValue)
-        {
             query = query.Where(w => w.SenderId == request.Parameters.SenderId.Value);
-        }
 
         if (request.Parameters.RecipientId.HasValue)
-        {
             query = query.Where(w => w.SenderId == request.Parameters.RecipientId.Value);
-        }
 
         if (!string.IsNullOrWhiteSpace(request.Parameters.Text))
-        {
             query = query.Where(w => w.Content.Contains(request.Parameters.Text)
                                 || w.Title.Contains(request.Parameters.Text));
-        }
 
         var messages = await query.ToListAsync(cancellationToken);
 

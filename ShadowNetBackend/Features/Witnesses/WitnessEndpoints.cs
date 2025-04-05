@@ -11,13 +11,34 @@ public static class WitnessEndpoints
 {
     public static void MapWitnessEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/Witnesses");
+        var group = app.MapGroup("/api/Witnesses").WithTags("Witnesses");
 
-        group.MapGet("", GetAllWitnesses).WithName("GetAllWitnesses");
-        group.MapGet("/{id:guid}", GetWitnessById).WithName("GetWitnessById");
-        group.MapPost("", CreateWitness).WithName("CreateWitness");
-        group.MapPut("/{id:guid}", UpdateWitness).WithName("UpdateWitness");
-        group.MapDelete("/{id:guid}", DeleteWitness).WithName("DeleteWitness");
+        group.MapGet("", GetAllWitnesses)
+            .WithName("GetAllWitnesses")
+            .Produces<IEnumerable<WitnessResponse>>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest);
+
+        group.MapGet("/{id:guid}", GetWitnessById)
+            .WithName("GetWitnessById")
+            .Produces<WitnessResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPost("", CreateWitness)
+            .WithName("CreateWitness")
+            .Produces<Guid>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPut("/{id:guid}", UpdateWitness)
+            .WithName("UpdateWitness")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapDelete("/{id:guid}", DeleteWitness)
+            .WithName("DeleteWitness")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound);
     }
 
     private static async Task<IResult> GetAllWitnesses([AsParameters] WitnessParameters parameters, ISender sender, CancellationToken cancellationToken)

@@ -20,7 +20,7 @@ public static class DecryptFieldEndpoints
 {
     public static void MapDecryptFieldEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/decryptfield");
+        var group = app.MapGroup("/api/decryptfield").WithTags("Security");
         group.MapPost("", DecryptField).WithName("DecryptField");
     }
 

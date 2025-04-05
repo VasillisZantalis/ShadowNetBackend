@@ -17,8 +17,6 @@ public class DeleteAgentCommandHandler : IRequestHandler<DeleteAgentCommand, boo
 
     public async Task<bool> Handle(DeleteAgentCommand request, CancellationToken cancellationToken)
     {
-        string cacheKey = $"{CacheKeys.Agents}_{request.Id}";
-
         await _sender.Send(new GetByIdAgentQuery(request.Id), cancellationToken);
 
         var agent = await _dbContext.Agents.FirstOrDefaultAsync(a => a.Id == request.Id.ToString(), cancellationToken);

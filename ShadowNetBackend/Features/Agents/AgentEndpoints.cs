@@ -4,6 +4,7 @@ using ShadowNetBackend.Features.Agents.DeleteAgent;
 using ShadowNetBackend.Features.Agents.GetAllAgents;
 using ShadowNetBackend.Features.Agents.GetByIdAgent;
 using ShadowNetBackend.Features.Agents.UpdateAgent;
+using ShadowNetBackend.Features.Criminals.Common;
 
 namespace ShadowNetBackend.Features.Agents;
 
@@ -11,13 +12,35 @@ public static class AgentEndpoints
 {
     public static void MapAgentEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/agents");
+        var group = app.MapGroup("/api/agents").WithTags("Agents");
 
-        group.MapGet("", GetAllAgents).WithName("GetAllAgents");
-        group.MapGet("/{id:guid}", GetAgentById).WithName("GetAgentById");
-        group.MapPost("", CreateAgent).WithName("CreateAgent");
-        group.MapPut("/{id:guid}", UpdateAgent).WithName("UpdateAgent");
-        group.MapDelete("/{id:guid}", DeleteAgent).WithName("DeleteAgent");
+        group.MapGet("", GetAllAgents)
+            .WithName("GetAllAgents")
+            .Produces<IEnumerable<AgentResponse>>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest);
+
+        group.MapGet("/{id:guid}", GetAgentById)
+            .WithName("GetAgentById")
+            .Produces<AgentResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPost("", CreateAgent)
+            .WithName("CreateAgent")
+            .Produces<Guid>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPut("/{id:guid}", UpdateAgent)
+            .WithName("UpdateAgent")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapDelete("/{id:guid}", DeleteAgent)
+            .WithName("DeleteAgent")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound);
     }
 
     private static async Task<IResult> GetAllAgents([AsParameters] AgentParameters parameters, ISender sender, CancellationToken cancellationToken)

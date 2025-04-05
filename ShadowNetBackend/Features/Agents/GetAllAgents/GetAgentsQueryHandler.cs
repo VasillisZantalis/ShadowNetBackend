@@ -26,12 +26,9 @@ public class GetAgentsQueryHandler : IRequestHandler<GetAgentsQuery, IEnumerable
             .ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
 
         if (!string.IsNullOrEmpty(request.Parameters.Name))
-        {
-            query = query.Where(w => request.Parameters.Name.Contains(w.FirstName) || request.Parameters.Name.Contains(w.LastName));
-        }
+            query = query.Where(w => w.FirstName.Contains(request.Parameters.Name) || w.LastName.Contains(request.Parameters.Name));
 
         var agents = await query.ToListAsync(cancellationToken);
-
         var agentResponses = agents.Select(s => s.ToAgentResponse()).ToList();
 
         await _cache.SetAsync(nameof(CacheKeys.Agents), agentResponses, TimeSpan.FromMinutes(15));

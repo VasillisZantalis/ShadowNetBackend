@@ -18,22 +18,9 @@ public class CreateAgentCommandHandler : IRequestHandler<CreateAgentCommand, Gui
 
     public async Task<Guid?> Handle(CreateAgentCommand request, CancellationToken cancellationToken)
     {
-        var user = new Agent
-        {
-            UserName = request.Email,
-            Email = request.Email,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Image = request.Image is null
-                ? null
-                : FileHelper.ConvertFromBase64(request.Image),
-            Rank = request.Rank,
-            Alias = request.Alias,
-            Specialization = request.Specialization,
-            ClearanceLevel = request.ClearanceLevel
-        };
+        var agent = request.ToAgent();
 
-        var result = await _userManager.CreateAsync(user, request.Password);
+        var result = await _userManager.CreateAsync(agent, request.Password);
 
         if (!result.Succeeded)
         {
@@ -46,11 +33,11 @@ public class CreateAgentCommandHandler : IRequestHandler<CreateAgentCommand, Gui
             throw new ValidationException(errors);
         }
 
-        await _userManager.AddToRoleAsync(user, request.Rank.ToString());
+        await _userManager.AddToRoleAsync(agent, request.Rank.ToString());
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         await _cache.RemoveAsync(nameof(CacheKeys.Agents));
 
-        return Guid.Parse(user.Id);
+        return Guid.Parse(agent.Id);
     }
 }

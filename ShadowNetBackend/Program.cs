@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using ShadowNetBackend.Behaviors;
 using ShadowNetBackend.Common.Helpers;
+using ShadowNetBackend.Features.Criminals;
 using ShadowNetBackend.Features.Messages;
 using ShadowNetBackend.Features.Security.DecryptField;
 using ShadowNetBackend.Middleware;
@@ -92,6 +93,7 @@ app.MapWitnessEndpoints();
 app.MapSafeHouseEndpoints();
 app.MapMessageEndpoints();
 app.MapDecryptFieldEndpoints();
+app.MapCriminalEndpoints();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
