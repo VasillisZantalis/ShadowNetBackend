@@ -1,27 +1,26 @@
-﻿using ShadowNetBackend.Features.Criminals.GetByIdCriminal;
+﻿using ShadowNetBackend.Features.Criminals.Common;
 
 namespace ShadowNetBackend.Features.Criminals.UpdateCriminal;
 
 public class UpdateCriminalCommandHandler : IRequestHandler<UpdateCriminalCommand, bool>
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly ISender _sender;
     private readonly ICacheService _cache;
 
-    public UpdateCriminalCommandHandler(ApplicationDbContext dbContext, ISender sender, ICacheService cache)
+    public UpdateCriminalCommandHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
-        _sender = sender;
         _cache = cache;
     }
 
     public async Task<bool> Handle(UpdateCriminalCommand request, CancellationToken cancellationToken)
     {
-        await _sender.Send(new GetByIdCriminalQuery(request.Id), cancellationToken);
 
         var criminal = await _dbContext.Criminals.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
+        if (criminal is null)
+            throw new CriminalNotFoundException();
 
-        criminal!.FirstName = request.FirstName;
+        criminal.FirstName = request.FirstName;
         criminal.LastName = request.LastName;
         criminal.Alias = request.Alias;
         criminal.DateOfBirth = request.DateOfBirth;

@@ -1,29 +1,31 @@
-﻿using ShadowNetBackend.Features.Agents.GetByIdAgent;
-using ShadowNetBackend.Features.Missions.GetByIdMission;
+﻿using ShadowNetBackend.Features.Agents.Common;
+using ShadowNetBackend.Features.Missions.Common;
 
 namespace ShadowNetBackend.Features.Agents.UpdateAgent;
 
 public class UpdateAgentCommandHandler : IRequestHandler<UpdateAgentCommand, bool>
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly ISender _sender;
     private readonly ICacheService _cache;
 
-    public UpdateAgentCommandHandler(ApplicationDbContext dbContext, ISender sender, ICacheService cache)
+    public UpdateAgentCommandHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
-        _sender = sender;
         _cache = cache;
     }
 
     public async Task<bool> Handle(UpdateAgentCommand request, CancellationToken cancellationToken)
     {
-        await _sender.Send(new GetByIdAgentQuery(request.Id), cancellationToken);
-
         if (request.MissionId.HasValue)
-            await _sender.Send(new GetByIdMissionQuery(request.MissionId.Value, null, null), cancellationToken);
+        {
+            var exists = await _dbContext.ExistsAsync<Mission>(request.MissionId.Value, cancellationToken);
+            if (!exists)
+                throw new MissionNotFoundException();
+        }
 
         var agent = await _dbContext.Agents.FirstAsync(a => a.Id == request.Id.ToString(), cancellationToken);
+        if (agent is null)
+            throw new AgentNotFoundException();
 
         agent.FirstName = request.FirstName;
         agent.LastName = request.LastName;

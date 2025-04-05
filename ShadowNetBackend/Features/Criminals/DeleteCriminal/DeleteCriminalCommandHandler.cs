@@ -1,26 +1,25 @@
-﻿using ShadowNetBackend.Features.Criminals.GetByIdCriminal;
+﻿using ShadowNetBackend.Features.Criminals.Common;
 
 namespace ShadowNetBackend.Features.Criminals.DeleteCriminal;
 
 public class DeleteCriminalCommandHandler : IRequestHandler<DeleteCriminalCommand, bool>
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly ISender _sender;
     private readonly ICacheService _cache;
 
-    public DeleteCriminalCommandHandler(ApplicationDbContext dbContext, ISender sender, ICacheService cache)
+    public DeleteCriminalCommandHandler(ApplicationDbContext dbContext, ICacheService cache)
     {
         _dbContext = dbContext;
-        _sender = sender;
         _cache = cache;
     }
 
     public async Task<bool> Handle(DeleteCriminalCommand request, CancellationToken cancellationToken)
     {
-        await _sender.Send(new GetByIdCriminalQuery(request.Id), cancellationToken);
         var criminal = await _dbContext.Criminals.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
+        if (criminal is null)
+            throw new CriminalNotFoundException();
 
-        _dbContext.Criminals.Remove(criminal!);
+        _dbContext.Criminals.Remove(criminal);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         await _cache.RemoveAsync(nameof(CacheKeys.Criminals));
