@@ -1,7 +1,4 @@
-﻿using ShadowNetBackend.Common;
-using ShadowNetBackend.Features.Agents;
-
-namespace ShadowNetBackend.Features.Missions;
+﻿namespace ShadowNetBackend.Features.Missions;
 
 public class Mission
 {
