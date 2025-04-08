@@ -32,6 +32,8 @@ builder.Services.AddIdentity<Agent, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetSection("RedisCacheSettings:ConnectionString").Value;
@@ -95,7 +97,7 @@ app.MapMessageEndpoints();
 app.MapDecryptFieldEndpoints();
 app.MapCriminalEndpoints();
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseExceptionHandler();
 
 app.MapHub<ChatHub>("/chatHub");
 
