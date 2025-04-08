@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
-using ShadowNetBackend.Common;
 using System.Text.Json;
 
 namespace ShadowNetBackend.Infrastructure;

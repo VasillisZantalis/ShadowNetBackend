@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Common;
-
-namespace ShadowNetBackend.Infrastructure.Interfaces;
+﻿namespace ShadowNetBackend.Infrastructure.Interfaces;
 
 public interface ICryptographyService
 {

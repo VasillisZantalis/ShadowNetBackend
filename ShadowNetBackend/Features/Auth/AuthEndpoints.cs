@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using ShadowNetBackend.Features.Auth.Login;
+﻿using ShadowNetBackend.Features.Auth.Login;
 using ShadowNetBackend.Features.Auth.RefreshToken;
 
 namespace ShadowNetBackend.Features.Auth;

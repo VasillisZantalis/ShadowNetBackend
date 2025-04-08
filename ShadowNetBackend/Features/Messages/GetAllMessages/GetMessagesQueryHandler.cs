@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Features.Messages.Common;
-
-namespace ShadowNetBackend.Features.Messages.GetAllMessages;
+﻿namespace ShadowNetBackend.Features.Messages.GetAllMessages;
 
 public class GetMessagesQueryHandler : IRequestHandler<GetMessagesQuery, IEnumerable<MessageResponse>>
 {

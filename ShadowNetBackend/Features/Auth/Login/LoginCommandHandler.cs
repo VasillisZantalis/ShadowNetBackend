@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using ShadowNetBackend.Common.Helpers;
 
 namespace ShadowNetBackend.Features.Auth.Login;
 

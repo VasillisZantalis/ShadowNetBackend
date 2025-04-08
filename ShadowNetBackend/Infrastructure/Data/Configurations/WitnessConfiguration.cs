@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using ShadowNetBackend.Features.Witnesses;
 
 namespace ShadowNetBackend.Infrastructure.Data.Configurations;
 

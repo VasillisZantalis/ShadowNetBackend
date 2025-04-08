@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Common;
-
-namespace ShadowNetBackend.Features.Missions.Common;
+﻿namespace ShadowNetBackend.Features.Missions.Common;
 
 public class MissionParameters : QueryStringParameters
 {

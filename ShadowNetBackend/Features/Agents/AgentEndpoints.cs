@@ -4,7 +4,6 @@ using ShadowNetBackend.Features.Agents.DeleteAgent;
 using ShadowNetBackend.Features.Agents.GetAllAgents;
 using ShadowNetBackend.Features.Agents.GetByIdAgent;
 using ShadowNetBackend.Features.Agents.UpdateAgent;
-using ShadowNetBackend.Features.Criminals.Common;
 
 namespace ShadowNetBackend.Features.Agents;
 

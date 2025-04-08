@@ -1,10 +1,4 @@
-﻿using MediatR;
-using ShadowNetBackend.Common;
-using ShadowNetBackend.Common.Helpers;
-using ShadowNetBackend.Infrastructure.Data;
-using ShadowNetBackend.Infrastructure.Interfaces;
-
-namespace ShadowNetBackend.Features.Missions.CreateMission;
+﻿namespace ShadowNetBackend.Features.Missions.CreateMission;
 
 public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand, Guid>
 {
@@ -24,8 +18,8 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
         var mission = new Mission
         {
             Title = request.Title,
-            Image = request.Image != null 
-                ? FileHelper.ConvertFromBase64(request.Image) 
+            Image = request.Image != null
+                ? FileHelper.ConvertFromBase64(request.Image)
                 : null,
             Objective = request.EncryptionType != EncryptionType.None
                 ? _cryptographyService.Encrypt(request.Objective, request.EncryptionType, request.EncryptionKey)

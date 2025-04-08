@@ -1,5 +1,4 @@
-﻿using ShadowNetBackend.Features.SafeHouses;
-using ShadowNetBackend.Features.SafeHouses.Common;
+﻿using ShadowNetBackend.Features.SafeHouses.Common;
 
 namespace ShadowNetBackend.Mappings;
 

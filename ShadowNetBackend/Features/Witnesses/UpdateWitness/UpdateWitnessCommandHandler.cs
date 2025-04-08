@@ -1,5 +1,4 @@
-﻿using ShadowNetBackend.Common.Helpers;
-using ShadowNetBackend.Features.Witnesses.GetByIdWitness;
+﻿using ShadowNetBackend.Features.Witnesses.GetByIdWitness;
 
 namespace ShadowNetBackend.Features.Witnesses.UpdateWitness;
 

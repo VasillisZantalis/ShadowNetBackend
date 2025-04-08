@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Features.Messages.Common;
-
-namespace ShadowNetBackend.Features.Messages.GetByIdMessage;
+﻿namespace ShadowNetBackend.Features.Messages.GetByIdMessage;
 
 public class GetByIdMessageQueryHandler : IRequestHandler<GetByIdMessageQuery, MessageResponse>
 {

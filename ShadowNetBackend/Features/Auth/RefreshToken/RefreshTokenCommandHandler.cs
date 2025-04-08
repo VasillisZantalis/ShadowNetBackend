@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Common.Helpers;
-
-namespace ShadowNetBackend.Features.Auth.RefreshToken;
+﻿namespace ShadowNetBackend.Features.Auth.RefreshToken;
 
 public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, string?>
 {
