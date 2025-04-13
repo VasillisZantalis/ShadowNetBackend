@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowNetBackend.Tests.Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowNetBackend.Tests.Integration", "ShadowNetBackend.Tests.Integration\ShadowNetBackend.Tests.Integration.csproj", "{122D466E-E004-4474-86D3-40E9861D698E}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4475D38D-EB54-4CE7-BEC7-263C367CFC6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{122D466E-E004-4474-86D3-40E9861D698E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{122D466E-E004-4474-86D3-40E9861D698E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{122D466E-E004-4474-86D3-40E9861D698E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4475D38D-EB54-4CE7-BEC7-263C367CFC6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4475D38D-EB54-4CE7-BEC7-263C367CFC6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4475D38D-EB54-4CE7-BEC7-263C367CFC6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4475D38D-EB54-4CE7-BEC7-263C367CFC6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

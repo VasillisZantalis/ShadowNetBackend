@@ -1,11 +1,13 @@
-﻿
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>d10dc928-36b1-4cfe-a3c7-90274d1f7caf</ProjectGuid>
-    <UserSecretsId>0bb1ade1-055f-4b34-bfac-1be79cf6865f</UserSecretsId>
+    <ProjectGuid>4475d38d-eb54-4ce7-bec7-263c367cfc6f</ProjectGuid>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/scalar/v1</DockerServiceUrl>
+    <DockerServiceName>shadownetbackend</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

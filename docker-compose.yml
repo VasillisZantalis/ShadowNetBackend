@@ -1,21 +1,7 @@
-services:
-  shadownetbackend:
-    image: ${DOCKER_REGISTRY-}shadownetbackend
-    build:
-      context: .
-      dockerfile: ShadowNetBackend/Dockerfile
-    ports:
-      - "8000:8000"
-      - "8001:8001"
-    depends_on:
-      - shadownetdb
 
+services:
   shadownetdb:
-    image: postgres:latest
-    container_name: shadownetdb
-    environment:
-      - POSTGRES_DB=shadownet
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=7530
-    ports:
-      - "5432:5432"
+    image: postgres
+
+volumes:
+  postgres_shadownetdb:
