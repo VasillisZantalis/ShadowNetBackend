@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ShadowNetBackend.Features.Criminals.UpdateCriminal;
+﻿namespace ShadowNetBackend.Features.Criminals.UpdateCriminal;
 
 public class UpdateCriminalValidator : AbstractValidator<UpdateCriminalCommand>
 {

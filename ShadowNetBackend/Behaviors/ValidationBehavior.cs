@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ShadowNetBackend.Behaviors;
+﻿namespace ShadowNetBackend.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
 where TRequest : IRequest<TResponse>

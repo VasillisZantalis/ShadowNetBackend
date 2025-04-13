@@ -1,5 +1,6 @@
 ﻿global using MediatR;
 global using Microsoft.EntityFrameworkCore;
+global using FluentValidation;
 global using ShadowNetBackend.Common;
 global using ShadowNetBackend.Features.Messages.Common;
 global using ShadowNetBackend.Infrastructure.Data;

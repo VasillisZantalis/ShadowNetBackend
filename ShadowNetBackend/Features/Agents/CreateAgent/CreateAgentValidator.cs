@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ShadowNetBackend.Features.Agents.CreateAgent;
+﻿namespace ShadowNetBackend.Features.Agents.CreateAgent;
 
 public class CreateAgentValidator : AbstractValidator<CreateAgentCommand>
 {

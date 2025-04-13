@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ShadowNetBackend.Features.Criminals.CreateCriminal;
+﻿namespace ShadowNetBackend.Features.Criminals.CreateCriminal;
 
 public class CreateCriminalValidator : AbstractValidator<CreateCriminalCommand>
 {

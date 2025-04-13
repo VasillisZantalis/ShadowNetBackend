@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ShadowNetBackend.Features.Witnesses.UpdateWitness;
+﻿namespace ShadowNetBackend.Features.Witnesses.UpdateWitness;
 
 public class UpdateWitnessValidator : AbstractValidator<UpdateWitnessCommand>
 {

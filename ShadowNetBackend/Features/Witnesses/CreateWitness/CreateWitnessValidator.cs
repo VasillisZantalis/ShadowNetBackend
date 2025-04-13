@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ShadowNetBackend.Features.Witnesses.CreateWitness;
+﻿namespace ShadowNetBackend.Features.Witnesses.CreateWitness;
 
 public class CreateWitnessValidator : AbstractValidator<CreateWitnessCommand>
 {

@@ -1,11 +1,9 @@
-using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using ShadowNetBackend.Behaviors;
-using ShadowNetBackend.Common.Helpers;
 using ShadowNetBackend.Features.Criminals;
 using ShadowNetBackend.Features.Messages;
 using ShadowNetBackend.Features.Security.DecryptField;

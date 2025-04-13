@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ShadowNetBackend.Features.Messages.CreateMessage;
+﻿namespace ShadowNetBackend.Features.Messages.CreateMessage;
 
 public class CreateMessageValidator : AbstractValidator<CreateMessageCommand>
 {

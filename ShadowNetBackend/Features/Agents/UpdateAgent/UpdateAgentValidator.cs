@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ShadowNetBackend.Features.Agents.UpdateAgent;
+﻿namespace ShadowNetBackend.Features.Agents.UpdateAgent;
 
 public class UpdateAgentValidator : AbstractValidator<UpdateAgentCommand>
 {

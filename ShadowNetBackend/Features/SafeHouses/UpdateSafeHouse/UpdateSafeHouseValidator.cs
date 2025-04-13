@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ShadowNetBackend.Features.SafeHouses.UpdateSafeHouse;
+﻿namespace ShadowNetBackend.Features.SafeHouses.UpdateSafeHouse;
 
 public class UpdateSafeHouseValidator : AbstractValidator<UpdateSafeHouseCommand>
 {
