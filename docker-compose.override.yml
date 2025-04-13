@@ -2,9 +2,9 @@ services:
   shadownetdb:
     container_name: shadownetdb
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: shadownetdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=shadownetdb
     restart: always
     ports:
       - 5432:5432

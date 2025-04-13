@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace ShadowNetBackend.Infrastructure.Data.Configurations;
+﻿namespace ShadowNetBackend.Infrastructure.Data.Configurations;
 
 public class AgentConfiguration : IEntityTypeConfiguration<Agent>
 {

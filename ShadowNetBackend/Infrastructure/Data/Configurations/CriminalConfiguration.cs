@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ShadowNetBackend.Features.Criminals;
+﻿using ShadowNetBackend.Features.Criminals;
 
 namespace ShadowNetBackend.Infrastructure.Data.Configurations;
 

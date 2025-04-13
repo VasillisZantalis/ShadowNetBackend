@@ -30,7 +30,7 @@ public class CreateAgentCommandHandler : IRequestHandler<CreateAgentCommand, Gui
                        g => g.Key,
                        g => g.Select(e => e.Description).ToArray()
                    );
-            throw new ValidationException(errors);
+            throw new Exceptions.ValidationException(errors);
         }
 
         await _userManager.AddToRoleAsync(agent, request.Rank.ToString());

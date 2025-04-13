@@ -11,14 +11,14 @@ public class ApplicationDbContext : IdentityDbContext<Agent>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-    public DbSet<Agent> Agents { get; set; } = null!;
-    public DbSet<Mission> Missions { get; set; } = null!;
-    public DbSet<SafeHouse> SafeHouses { get; set; } = null!;
-    public DbSet<Witness> Witnesses { get; set; } = null!;
-    public DbSet<WitnessRelocation> WitnessRelocations { get; set; } = null!;
-    public DbSet<Message> Messages { get; set; } = null!;
-    public DbSet<Criminal> Criminals { get; set; } = null!;
-    public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
+    public DbSet<Agent> Agents => Set<Agent>();
+    public DbSet<Mission> Missions => Set<Mission>();
+    public DbSet<SafeHouse> SafeHouses => Set<SafeHouse>();
+    public DbSet<Witness> Witnesses => Set<Witness>();
+    public DbSet<WitnessRelocation> WitnessRelocations => Set<WitnessRelocation>();
+    public DbSet<Message> Messages => Set<Message>();
+    public DbSet<Criminal> Criminals => Set<Criminal>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

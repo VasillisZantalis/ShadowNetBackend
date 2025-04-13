@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ShadowNetBackend.Features.Messages;
+﻿using ShadowNetBackend.Features.Messages;
 
 namespace ShadowNetBackend.Infrastructure.Data.Configurations;
 
