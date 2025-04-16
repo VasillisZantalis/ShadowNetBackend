@@ -28,7 +28,7 @@ public class GlobalExceptionHandler : IExceptionHandler
             problemDetails.Status = baseException.StatusCode;
             problemDetails.Detail = exception.Message;
 
-            if (baseException is Exceptions.ValidationException validationException)
+            if (baseException is ValidationFailedException validationException)
             {
                 problemDetails.Extensions["errors"] = validationException.Errors;
             }

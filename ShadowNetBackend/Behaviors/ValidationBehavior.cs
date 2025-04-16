@@ -1,4 +1,6 @@
-﻿namespace ShadowNetBackend.Behaviors;
+﻿using ShadowNetBackend.Exceptions;
+
+namespace ShadowNetBackend.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
 where TRequest : IRequest<TResponse>
@@ -27,7 +29,7 @@ where TRequest : IRequest<TResponse>
                        g => g.Select(e => e.ErrorMessage).ToArray()
                    );
 
-                throw new Exceptions.ValidationException(errors);
+                throw new ValidationFailedException(errors);
             }
         }
 

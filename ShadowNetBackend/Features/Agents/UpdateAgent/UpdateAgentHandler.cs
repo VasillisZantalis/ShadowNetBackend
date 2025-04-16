@@ -5,6 +5,21 @@ namespace ShadowNetBackend.Features.Agents.UpdateAgent;
 
 public record UpdateAgentCommand(AgentForUpdateDto AgentForUpdate) : ICommand<bool>;
 
+public class UpdateAgentCommandValidator : AbstractValidator<UpdateAgentCommand>
+{
+    public UpdateAgentCommandValidator()
+    {
+        RuleFor(x => x.AgentForUpdate.FirstName)
+            .NotEmpty().WithMessage("First name is required")
+            .MaximumLength(250).WithMessage("First name must not exceed 250 characters");
+
+        RuleFor(x => x.AgentForUpdate.LastName)
+            .NotEmpty().WithMessage("Last name is required")
+            .MaximumLength(250).WithMessage("Last name must not exceed 250 characters");
+    }
+}
+
+
 internal class UpdateAgentHandler(
     ApplicationDbContext dbContext,
     ICacheService cache) : ICommandHandler<UpdateAgentCommand, bool>

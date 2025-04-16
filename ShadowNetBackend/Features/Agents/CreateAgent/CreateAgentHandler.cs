@@ -5,6 +5,24 @@ namespace ShadowNetBackend.Features.Agents.CreateAgent;
 public record CreateAgentCommand(AgentForCreationDto AgentForCreation) : ICommand<CreateAgentResult>;
 public record CreateAgentResult(Guid Id);
 
+public class CreateAgentCommandValidator : AbstractValidator<CreateAgentCommand>
+{
+    public CreateAgentCommandValidator()
+    {
+        RuleFor(x => x.AgentForCreation.FirstName)
+            .NotEmpty().WithMessage("First name is required")
+            .MaximumLength(250).WithMessage("First name must not exceed 250 characters");
+
+        RuleFor(x => x.AgentForCreation.LastName)
+            .NotEmpty().WithMessage("Last name is required")
+            .MaximumLength(250).WithMessage("Last name must not exceed 250 characters");
+
+        RuleFor(x => x.AgentForCreation.ClearanceLevel)
+            .NotNull().WithMessage("Clearance Level is required");
+    }
+}
+
+
 internal class CreateAgentHandler(
     UserManager<Agent> userManager, 
     ApplicationDbContext dbContext,
@@ -24,7 +42,7 @@ internal class CreateAgentHandler(
                        g => g.Key,
                        g => g.Select(e => e.Description).ToArray()
                    );
-            throw new Exceptions.ValidationException(errors);
+            throw new Exceptions.ValidationFailedException(errors);
         }
 
         await userManager.AddToRoleAsync(agent, command.AgentForCreation.Rank.ToString());
