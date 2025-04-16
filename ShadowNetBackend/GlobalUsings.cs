@@ -20,5 +20,6 @@ global using ShadowNetBackend.Mappings;
 global using ShadowNetBackend.CQRS;
 global using ShadowNetBackend.Dtos.Agents;
 global using ShadowNetBackend.Dtos.Criminals;
+global using ShadowNetBackend.Dtos.Missions;
 global using Carter;
 global using Serilog;
