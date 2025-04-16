@@ -1,6 +1,6 @@
-﻿namespace ShadowNetBackend.Features.Criminals.UpdateCriminal;
+﻿namespace ShadowNetBackend.Dtos.Criminals;
 
-public record UpdateCriminalCommand(
+public record CriminalDto(
     Guid Id,
     string FirstName,
     string LastName,
@@ -14,4 +14,5 @@ public record UpdateCriminalCommand(
     DateTime? LastSpottedDate,
     bool UnderSurveillance,
     string? SurveillanceNotes,
-    string? Image) : IRequest<bool>;
+    string? Image
+);

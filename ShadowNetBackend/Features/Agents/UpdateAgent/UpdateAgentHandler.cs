@@ -19,7 +19,6 @@ public class UpdateAgentCommandValidator : AbstractValidator<UpdateAgentCommand>
     }
 }
 
-
 internal class UpdateAgentHandler(
     ApplicationDbContext dbContext,
     ICacheService cache) : ICommandHandler<UpdateAgentCommand, bool>

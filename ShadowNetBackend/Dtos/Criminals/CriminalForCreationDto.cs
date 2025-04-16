@@ -1,6 +1,6 @@
-﻿namespace ShadowNetBackend.Features.Criminals.CreateCriminal;
+﻿namespace ShadowNetBackend.Dtos.Criminals;
 
-public class CreateCriminalCommand : IRequest<Guid?>
+public class CriminalForCreationDto
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
