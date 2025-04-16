@@ -1,6 +1,6 @@
 ﻿namespace ShadowNetBackend.Features.Agents.CreateAgent;
 
-public class CreateAgentValidator : AbstractValidator<CreateAgentCommand>
+public class CreateAgentValidator : AbstractValidator<AgentForCreationDto>
 {
     public CreateAgentValidator()
     {

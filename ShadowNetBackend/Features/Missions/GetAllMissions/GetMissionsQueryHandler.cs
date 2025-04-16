@@ -48,13 +48,13 @@ public class GetMissionsQueryHandler : IRequestHandler<GetMissionsQuery, IEnumer
             Risk = mission.Risk,
             Date = mission.Date,
             AssignedAgents = mission.AssignedAgents
-            .Select(s => new AgentResponse
-            {
-                Id = Guid.Parse(s.Id),
-                FirstName = s.FirstName,
-                LastName = s.LastName,
-                Image = s.Image != null ? FileHelper.ConvertToBase64(s.Image) : null,
-            })
+            .Select(s => new AgentDto
+            (
+                Guid.Parse(s.Id),
+                s.FirstName,
+                s.LastName,
+                s.Image != null ? FileHelper.ConvertToBase64(s.Image) : null
+            ))
         }).ToList();
 
         await _cache.SetAsync(nameof(CacheKeys.Missions), missionResponses, TimeSpan.FromMinutes(15));

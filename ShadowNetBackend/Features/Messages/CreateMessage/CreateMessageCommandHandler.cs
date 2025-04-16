@@ -19,8 +19,8 @@ public class CreateMessageCommandHandler : IRequestHandler<CreateMessageCommand,
 
     public async Task<Guid> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
     {
-        await _sender.Send(new GetByIdAgentQuery(request.SenderId), cancellationToken);
-        await _sender.Send(new GetByIdAgentQuery(request.ReceiverId), cancellationToken);
+        await _sender.Send(new GetAgentByIdQuery(request.SenderId), cancellationToken);
+        await _sender.Send(new GetAgentByIdQuery(request.ReceiverId), cancellationToken);
 
         var message = new Message
         {

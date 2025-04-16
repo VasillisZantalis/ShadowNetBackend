@@ -1,6 +1,6 @@
-﻿namespace ShadowNetBackend.Features.Agents.UpdateAgent;
+﻿namespace ShadowNetBackend.Dtos.Agents;
 
-public record UpdateAgentCommand(
+public record AgentForUpdateDto(
     Guid Id,
     string FirstName,
     string LastName,
@@ -8,4 +8,4 @@ public record UpdateAgentCommand(
     string? Specialization,
     ClearanceLevel ClearanceLevel,
     Guid? MissionId,
-    string? Image) : IRequest<bool>;
+    string? Image);

@@ -1,6 +1,6 @@
-﻿namespace ShadowNetBackend.Features.Agents.CreateAgent;
+﻿namespace ShadowNetBackend.Dtos.Agents;
 
-public class CreateAgentCommand : IRequest<Guid?>
+public class AgentForCreationDto
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;

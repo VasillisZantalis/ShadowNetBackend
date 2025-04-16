@@ -1,6 +1,4 @@
-﻿using ShadowNetBackend.Features.Agents.Common;
-
-namespace ShadowNetBackend.Features.Missions.Common;
+﻿namespace ShadowNetBackend.Features.Missions.Common;
 
 public class MissionResponse
 {
@@ -12,5 +10,5 @@ public class MissionResponse
     public MissionStatus Status { get; set; } = MissionStatus.Planned;
     public RiskLevel Risk { get; set; } = RiskLevel.Low;
     public DateOnly Date { get; set; }
-    public IEnumerable<AgentResponse>? AssignedAgents { get; set; }
+    public IEnumerable<AgentDto>? AssignedAgents { get; set; }
 }

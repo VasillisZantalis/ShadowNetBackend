@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using ShadowNetBackend.Behaviors;
@@ -26,6 +25,8 @@ builder.Services.Configure<RedisCacheSettings>(builder.Configuration.GetSection(
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddCarter();
 
 builder.Services.AddIdentity<Agent, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -94,14 +95,15 @@ using (var scope = app.Services.CreateScope())
     await context.Database.MigrateAsync();
 }
 
-app.MapAuthEndpoints();
-app.MapAgentEndpoints();
-app.MapMissionEndpoints();
-app.MapWitnessEndpoints();
-app.MapSafeHouseEndpoints();
-app.MapMessageEndpoints();
-app.MapDecryptFieldEndpoints();
-app.MapCriminalEndpoints();
+app.MapCarter();
+
+//app.MapAuthEndpoints();
+//app.MapMissionEndpoints();
+//app.MapWitnessEndpoints();
+//app.MapSafeHouseEndpoints();
+//app.MapMessageEndpoints();
+//app.MapDecryptFieldEndpoints();
+//app.MapCriminalEndpoints();
 
 app.UseExceptionHandler();
 

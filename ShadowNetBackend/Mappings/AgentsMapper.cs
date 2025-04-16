@@ -1,38 +1,39 @@
 ﻿using ShadowNetBackend.Features.Agents.Common;
-using ShadowNetBackend.Features.Agents.CreateAgent;
 
 namespace ShadowNetBackend.Mappings;
 
 public static class AgentsMapper
 {
-    public static AgentResponse ToAgentResponse(this Agent agent)
+    public static AgentDto ToAgentDto(this Agent agent)
     {
-        return new AgentResponse
-        {
-            Id = Guid.Parse(agent.Id),
-            FirstName = agent.FirstName,
-            LastName = agent.LastName,
-            Image = agent.Image != null ? FileHelper.ConvertToBase64(agent.Image) : null,
-            Alias = agent.Alias,
-            Rank = agent.Rank,
-            Specialization = agent.Specialization,
-            ClearanceLevel = agent.ClearanceLevel
-        };
+        return new AgentDto
+        (
+            Guid.Parse(agent.Id),
+            agent.FirstName,
+            agent.LastName,
+            agent.Image != null ? FileHelper.ConvertToBase64(agent.Image) : null,
+            agent.Alias,
+            agent.Rank,
+            agent.Specialization,
+            agent.ClearanceLevel
+        );
     }
 
-    public static Agent ToAgent(this CreateAgentCommand command)
+    public static IEnumerable<AgentDto> ToAgentDto(this IEnumerable<Agent> agents) => agents.Select(s => s.ToAgentDto());
+
+    public static Agent ToAgent(this AgentForCreationDto agentForCreation)
     {
         return new Agent
         {
-            UserName = command.Email,
-            Email = command.Email,
-            FirstName = command.FirstName,
-            LastName = command.LastName,
-            Image = command.Image != null ? FileHelper.ConvertFromBase64(command.Image) : null,
-            Rank = command.Rank,
-            Alias = command.Alias,
-            Specialization = command.Specialization,
-            ClearanceLevel = command.ClearanceLevel
+            UserName = agentForCreation.Email,
+            Email = agentForCreation.Email,
+            FirstName = agentForCreation.FirstName,
+            LastName = agentForCreation.LastName,
+            Image = agentForCreation.Image != null ? FileHelper.ConvertFromBase64(agentForCreation.Image) : null,
+            Rank = agentForCreation.Rank,
+            Alias = agentForCreation.Alias,
+            Specialization = agentForCreation.Specialization,
+            ClearanceLevel = agentForCreation.ClearanceLevel
         };
     }
 }

@@ -1,5 +1,6 @@
 ﻿global using MediatR;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using FluentValidation;
 global using ShadowNetBackend.Common;
@@ -16,3 +17,7 @@ global using ShadowNetBackend.Features.Witnesses;
 global using ShadowNetBackend.Common.Helpers;
 global using ShadowNetBackend.Infrastructure;
 global using ShadowNetBackend.Mappings;
+global using ShadowNetBackend.CQRS;
+global using ShadowNetBackend.Dtos.Agents;
+global using Carter;
+

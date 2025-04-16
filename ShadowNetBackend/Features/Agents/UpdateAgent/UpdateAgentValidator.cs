@@ -1,6 +1,6 @@
 ﻿namespace ShadowNetBackend.Features.Agents.UpdateAgent;
 
-public class UpdateAgentValidator : AbstractValidator<UpdateAgentCommand>
+public class UpdateAgentValidator : AbstractValidator<AgentForUpdateDto>
 {
     public UpdateAgentValidator()
     {

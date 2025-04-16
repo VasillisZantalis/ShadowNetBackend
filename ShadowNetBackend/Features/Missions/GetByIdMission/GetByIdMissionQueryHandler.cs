@@ -41,7 +41,7 @@ public class GetByIdMissionQueryHandler : IRequestHandler<GetByIdMissionQuery, M
             Status = mission.Status,
             Risk = mission.Risk,
             Date = mission.Date,
-            AssignedAgents = mission.AssignedAgents.Select(x => x.ToAgentResponse()).ToList()
+            AssignedAgents = mission.AssignedAgents.Select(x => x.ToAgentDto()).ToList()
         };
 
         return missionResponse;
