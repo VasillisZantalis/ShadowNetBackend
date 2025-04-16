@@ -1,17 +1,15 @@
 ﻿namespace ShadowNetBackend.Features.Missions.UpdateMission;
 
-public record UpdateMissionRequest(MissionForUpdateDto MissionForUpdate);
-
 public class UpdateMissionEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPut("/api/missions", async (
-            [FromBody] UpdateMissionRequest request,
+            [FromBody] MissionForUpdateDto missionForUpdate,
             ISender sender,
             CancellationToken cancellationToken) =>
         {
-            await sender.Send(new UpdateMissionCommand(request.MissionForUpdate), cancellationToken);
+            await sender.Send(new UpdateMissionCommand(missionForUpdate), cancellationToken);
             return TypedResults.NoContent();
         })
         .WithName("UpdateMission")

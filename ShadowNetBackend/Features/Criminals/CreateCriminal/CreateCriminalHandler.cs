@@ -1,7 +1,6 @@
 ﻿namespace ShadowNetBackend.Features.Criminals.CreateCriminal;
 
-public record CreateCriminalCommand(CriminalForCreationDto CriminalForCreation) : ICommand<CreateCriminalResult>;
-public record CreateCriminalResult(Guid Id);
+public record CreateCriminalCommand(CriminalForCreationDto CriminalForCreation) : ICommand<Guid>;
 
 public class CreateCriminalCommandValidator : AbstractValidator<CreateCriminalCommand>
 {
@@ -32,9 +31,9 @@ public class CreateCriminalCommandValidator : AbstractValidator<CreateCriminalCo
 
 internal class CreateCriminalHandler(
     ApplicationDbContext dbContext,
-    ICacheService cache) : ICommandHandler<CreateCriminalCommand, CreateCriminalResult>
+    ICacheService cache) : ICommandHandler<CreateCriminalCommand, Guid>
 {
-    public async Task<CreateCriminalResult> Handle(CreateCriminalCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateCriminalCommand request, CancellationToken cancellationToken)
     {
         var criminal = request.CriminalForCreation.ToCriminal();
 
@@ -43,6 +42,6 @@ internal class CreateCriminalHandler(
 
         await cache.RemoveAsync(nameof(CacheKeys.Criminals));
 
-        return new CreateCriminalResult(criminal.Id);
+        return criminal.Id;
     }
 }

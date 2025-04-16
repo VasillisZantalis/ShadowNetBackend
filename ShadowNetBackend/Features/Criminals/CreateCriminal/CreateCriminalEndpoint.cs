@@ -12,7 +12,7 @@ public class CreateCriminalEndpoint : ICarterModule
             CancellationToken cancellationToken) =>
         {
             var result = await sender.Send(new CreateCriminalCommand(request.CriminalForCreation), cancellationToken);
-            return TypedResults.Created($"/api/criminals/{result.Id}", result);
+            return TypedResults.Created($"/api/criminals/{result}", result);
         })
         .WithName("CreateCriminal")
         .WithDescription("Create a new criminal")

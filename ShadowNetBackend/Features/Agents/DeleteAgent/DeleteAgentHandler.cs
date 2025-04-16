@@ -19,7 +19,6 @@ internal class DeleteAgentHandler(
         await dbContext.SaveChangesAsync(cancellationToken);
 
         await cache.RemoveAsync(nameof(CacheKeys.Agents));
-
         return true;
     }
 }

@@ -2,8 +2,6 @@
 
 namespace ShadowNetBackend.Features.Agents.GetAgentById;
 
-public record GetAgentByIdResponse(AgentDto Agent);
-
 public class GetAgentByIdEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
@@ -18,7 +16,7 @@ public class GetAgentByIdEndpoint : ICarterModule
         })
         .WithName("GetAgentById")
         .WithDescription("Get agent by Id")
-        .Produces<GetAgentByIdResponse>(StatusCodes.Status200OK)
+        .Produces<AgentDto>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status400BadRequest)
         .Produces(StatusCodes.Status404NotFound);
     }

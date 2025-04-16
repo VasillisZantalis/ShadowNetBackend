@@ -2,8 +2,7 @@
 
 namespace ShadowNetBackend.Features.Agents.CreateAgent;
 
-public record CreateAgentCommand(AgentForCreationDto AgentForCreation) : ICommand<CreateAgentResult>;
-public record CreateAgentResult(Guid Id);
+public record CreateAgentCommand(AgentForCreationDto AgentForCreation) : ICommand<Guid>;
 
 public class CreateAgentCommandValidator : AbstractValidator<CreateAgentCommand>
 {
@@ -26,9 +25,9 @@ public class CreateAgentCommandValidator : AbstractValidator<CreateAgentCommand>
 internal class CreateAgentHandler(
     UserManager<Agent> userManager, 
     ApplicationDbContext dbContext,
-    ICacheService cache) : ICommandHandler<CreateAgentCommand, CreateAgentResult>
+    ICacheService cache) : ICommandHandler<CreateAgentCommand, Guid>
 {
-    public async Task<CreateAgentResult> Handle(CreateAgentCommand command, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateAgentCommand command, CancellationToken cancellationToken)
     {
         var agent = command.AgentForCreation.ToAgent();
 
@@ -50,6 +49,6 @@ internal class CreateAgentHandler(
 
         await cache.RemoveAsync(nameof(CacheKeys.Agents));
 
-        return new CreateAgentResult(Guid.Parse(agent.Id));
+        return Guid.Parse(agent.Id);
     }
 }

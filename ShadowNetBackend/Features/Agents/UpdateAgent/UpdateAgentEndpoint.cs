@@ -1,17 +1,15 @@
 ﻿namespace ShadowNetBackend.Features.Agents.UpdateAgent;
 
-public record UpdateAgentRequest(AgentForUpdateDto AgentForUpdate);
-
 public class UpdateAgentEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPut("/api/agents", async (
-            [FromBody] UpdateAgentRequest request,
+            [FromBody] AgentForUpdateDto agentForUpdate,
             ISender sender,
             CancellationToken cancellationToken) =>
         {
-            await sender.Send(new UpdateAgentCommand(request.AgentForUpdate), cancellationToken);
+            await sender.Send(new UpdateAgentCommand(agentForUpdate), cancellationToken);
             return TypedResults.NoContent();
         })
         .WithName("UpdateAgent")

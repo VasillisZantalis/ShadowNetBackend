@@ -1,7 +1,6 @@
 ﻿using ShadowNetBackend.Features.Criminals.GetByIdCriminal;
 
 namespace ShadowNetBackend.Features.Criminals.GetCriminalById;
-public record GetCriminalByIdResponse(CriminalDto Criminal);
 
 public class GetCriminalByIdEndpoint : ICarterModule
 {
@@ -12,12 +11,12 @@ public class GetCriminalByIdEndpoint : ICarterModule
             ISender sender,
             CancellationToken cancellationToken) =>
         {
-            var response = await sender.Send(new GetCriminalByIdQuery(id), cancellationToken);
-            return TypedResults.Ok(response);
+            var result = await sender.Send(new GetCriminalByIdQuery(id), cancellationToken);
+            return TypedResults.Ok(result);
         })
         .WithName("GetCriminalById")
         .WithDescription("Get criminal by Id")
-        .Produces<GetCriminalByIdResponse>(StatusCodes.Status200OK)
+        .Produces<CriminalDto>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status400BadRequest)
         .Produces(StatusCodes.Status404NotFound);
     }
