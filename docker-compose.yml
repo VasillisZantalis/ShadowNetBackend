@@ -5,5 +5,8 @@ services:
   seq:
     image: datalust/seq:latest
 
+  redis:
+    image: redis:latest  
+
 volumes:
   postgres_shadownetdb:
