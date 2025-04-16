@@ -6,7 +6,7 @@ public class DeleteAgentEndpoint : ICarterModule
     {
         app.MapDelete("/api/agents/{id:guid}", async (
             Guid id,
-            [FromServices] ISender sender,
+            ISender sender,
             CancellationToken cancellationToken) =>
         {
             await sender.Send(new DeleteAgentCommand(id), cancellationToken);

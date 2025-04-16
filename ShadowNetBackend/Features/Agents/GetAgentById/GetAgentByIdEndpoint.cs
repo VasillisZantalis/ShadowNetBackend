@@ -10,7 +10,7 @@ public class GetAgentByIdEndpoint : ICarterModule
     {
         app.MapGet("/api/agents/{id:guid}", async (
             Guid id, 
-            [FromServices] ISender sender, 
+            ISender sender, 
             CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(new GetAgentByIdQuery(id), cancellationToken);

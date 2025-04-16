@@ -11,7 +11,7 @@ public class GetAgentsEndpoint : ICarterModule
     {
         app.MapGet("/api/agents", async (
             [AsParameters] AgentParameters parameters,
-            [FromServices] ISender sender,
+            ISender sender,
             CancellationToken cancellationToken) =>
         {
             var result = await sender.Send(new GetAgentsQuery(parameters), cancellationToken);

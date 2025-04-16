@@ -8,7 +8,7 @@ public class UpdateAgentEndpoint : ICarterModule
     {
         app.MapPut("/api/agents", async (
             [FromBody] UpdateAgentRequest request,
-            [FromServices] ISender sender,
+            ISender sender,
             CancellationToken cancellationToken) =>
         {
             await sender.Send(new UpdateAgentCommand(request.AgentForUpdate), cancellationToken);

@@ -9,7 +9,7 @@ public class CreateAgentEndpoint : ICarterModule
     {
         app.MapPost("/api/agents", async (
             [FromBody] CreateAgentRequest request,
-            [FromServices] ISender sender,
+            ISender sender,
             CancellationToken cancellationToken) =>
         {
             var result = await sender.Send(new CreateAgentCommand(request.AgentForCreation), cancellationToken);
