@@ -1,21 +1,13 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using ShadowNetBackend.Exceptions;
 
 namespace ShadowNetBackend.Middleware;
 
-public class GlobalExceptionHandler : IExceptionHandler
+public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
 {
-    private readonly ILogger<GlobalExceptionHandler> _logger;
-
-    public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
-    {
-        _logger = logger;
-    }
-
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        _logger.LogError(exception, "An error occurred");
+        logger.LogError(exception, "An error occurred");
 
         var problemDetails = new ProblemDetails
         {
@@ -43,6 +35,6 @@ public class GlobalExceptionHandler : IExceptionHandler
         httpContext.Response.ContentType = "application/json";
         await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
 
-        return true; // Indicates the exception was handled
+        return true;
     }
 }

@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using ShadowNetBackend.Behaviors;
-using ShadowNetBackend.Features.Criminals;
-using ShadowNetBackend.Features.Messages;
-using ShadowNetBackend.Features.Security.DecryptField;
 using ShadowNetBackend.Middleware;
 using System.Reflection;
 using System.Text;
@@ -14,11 +10,14 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenApi();
-
 builder.Configuration
     .AddEnvironmentVariables()
     .AddUserSecrets<Program>();
+
+builder.Host.UseSerilog((context, configuration) => 
+    configuration.ReadFrom.Configuration(context.Configuration));
+
+builder.Services.AddOpenApi();
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 builder.Services.Configure<RedisCacheSettings>(builder.Configuration.GetSection("RedisCacheSettings"));
@@ -70,6 +69,7 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    cfg.AddOpenBehavior(typeof(LogginBehavior<,>));
 });
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
@@ -96,15 +96,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapCarter();
-
-//app.MapAuthEndpoints();
-//app.MapMissionEndpoints();
-//app.MapWitnessEndpoints();
-//app.MapSafeHouseEndpoints();
-//app.MapMessageEndpoints();
-//app.MapDecryptFieldEndpoints();
-//app.MapCriminalEndpoints();
-
+app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 
 app.MapHub<ChatHub>("/chatHub");

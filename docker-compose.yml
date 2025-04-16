@@ -2,5 +2,8 @@ services:
   shadownetdb:
     image: postgres
 
+  seq:
+    image: datalust/seq:latest
+
 volumes:
   postgres_shadownetdb:

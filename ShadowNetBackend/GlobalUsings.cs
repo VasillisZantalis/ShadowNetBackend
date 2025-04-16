@@ -20,4 +20,4 @@ global using ShadowNetBackend.Mappings;
 global using ShadowNetBackend.CQRS;
 global using ShadowNetBackend.Dtos.Agents;
 global using Carter;
-
+global using Serilog;
