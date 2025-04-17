@@ -1,6 +1,6 @@
-﻿namespace ShadowNetBackend.Features.Messages.CreateMessage;
+﻿namespace ShadowNetBackend.Dtos.Messages;
 
-public record CreateMessageCommand(
+public record MessageForCreationDto(
     Guid SenderId,
     Guid ReceiverId,
     string Title,
@@ -8,4 +8,4 @@ public record CreateMessageCommand(
     DateTimeOffset? SentAt,
     DateTimeOffset? ExpiresAt,
     bool? IsDestroyed,
-    TimeSpan? AutoDestructTime) : IRequest<Guid>;
+    TimeSpan? AutoDestructTime);

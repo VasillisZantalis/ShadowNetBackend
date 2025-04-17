@@ -1,6 +1,6 @@
-﻿namespace ShadowNetBackend.Features.Messages.Common;
+﻿namespace ShadowNetBackend.Dtos.Messages;
 
-public record MessageResponse(
+public record MessageDto(
     Guid Id,
     Guid SenderId,
     Guid ReceiverId,

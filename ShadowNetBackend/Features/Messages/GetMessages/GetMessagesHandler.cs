@@ -1,25 +1,21 @@
-﻿namespace ShadowNetBackend.Features.Messages.GetAllMessages;
+﻿
+namespace ShadowNetBackend.Features.Messages.GetAllMessages;
 
-public class GetMessagesQueryHandler : IRequestHandler<GetMessagesQuery, IEnumerable<MessageResponse>>
+public record GetMessagesQuery(MessageParameters Parameters) : IQuery<IEnumerable<MessageDto>>;
+
+internal class GetMessagesHandler(
+    ApplicationDbContext dbContext,
+    ICacheService cache) : IQueryHandler<GetMessagesQuery, IEnumerable<MessageDto>>
 {
-    private readonly ApplicationDbContext _dbContext;
-    private readonly ICacheService _cache;
-
-    public GetMessagesQueryHandler(ApplicationDbContext dbContext, ICacheService cache)
+    public async Task<IEnumerable<MessageDto>> Handle(GetMessagesQuery request, CancellationToken cancellationToken)
     {
-        _dbContext = dbContext;
-        _cache = cache;
-    }
-
-    public async Task<IEnumerable<MessageResponse>> Handle(GetMessagesQuery request, CancellationToken cancellationToken)
-    {
-        var cachedMessages = await _cache.GetDataAsync<List<MessageResponse>>(nameof(CacheKeys.Messages));
+        var cachedMessages = await cache.GetDataAsync<List<MessageDto>>(nameof(CacheKeys.Messages));
         if (cachedMessages is not null)
         {
             return cachedMessages;
         }
 
-        var query = _dbContext.Messages.AsQueryable()
+        var query = dbContext.Messages.AsQueryable()
             .Where(w => w.IsDestroyed == false)
             .ApplySorting(request.Parameters.OrderBy)
             .ApplyPagination(request.Parameters.PageSize, request.Parameters.PageNumber);
@@ -42,7 +38,7 @@ public class GetMessagesQueryHandler : IRequestHandler<GetMessagesQuery, IEnumer
 
         var messages = await query.ToListAsync(cancellationToken);
 
-        var messageResponses = messages.Select(message => new MessageResponse
+        var messageDtos = messages.Select(message => new MessageDto
         (
             message.Id,
             message.SenderId,
@@ -52,8 +48,8 @@ public class GetMessagesQueryHandler : IRequestHandler<GetMessagesQuery, IEnumer
             message.SentAt
         )).ToList();
 
-        await _cache.SetAsync(nameof(CacheKeys.Messages), messageResponses, TimeSpan.FromHours(1));
+        await cache.SetAsync(nameof(CacheKeys.Messages), messageDtos, TimeSpan.FromHours(1));
 
-        return messageResponses;
+        return messageDtos;
     }
 }

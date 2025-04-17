@@ -1,7 +1,5 @@
 ﻿namespace ShadowNetBackend.Features.Missions.CreateMission;
 
-public record CreateMissionRequest(MissionForCreationDto MissionForCreation);
-
 public class CreateMissionEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
