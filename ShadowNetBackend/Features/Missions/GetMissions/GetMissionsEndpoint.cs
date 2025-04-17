@@ -15,6 +15,7 @@ public class GetMissionsEndpoint : ICarterModule
             var result = await sender.Send(new GetMissionsQuery(parameters), cancellationToken);
             return TypedResults.Ok(result);
         })
+        .WithTags("Missions")
         .WithName("GetMissions")
         .WithDescription("Get missions")
         .Produces<IEnumerable<MissionDto>>(StatusCodes.Status200OK)

@@ -14,6 +14,7 @@ public class GetMessagesEndpoint : ICarterModule
             var result = await sender.Send(new GetMessagesQuery(parameters), cancellationToken);
             return TypedResults.Ok(result);
         })
+        .WithTags("Messages")
         .WithName("GetMessages")
         .WithDescription("Get messages")
         .Produces<IEnumerable<MessageDto>>(StatusCodes.Status200OK)

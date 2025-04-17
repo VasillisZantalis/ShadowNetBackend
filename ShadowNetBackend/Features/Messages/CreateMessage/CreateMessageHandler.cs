@@ -1,5 +1,4 @@
-﻿using ShadowNetBackend.Dtos.Messages;
-using ShadowNetBackend.Features.Agents.Common;
+﻿using ShadowNetBackend.Features.Agents.Common;
 
 namespace ShadowNetBackend.Features.Messages.CreateMessage;
 

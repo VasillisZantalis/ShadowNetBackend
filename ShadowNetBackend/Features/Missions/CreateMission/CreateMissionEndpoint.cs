@@ -12,6 +12,7 @@ public class CreateMissionEndpoint : ICarterModule
             var result = await sender.Send(new CreateMissionCommand(missionForCreation), cancellationToken);
             return TypedResults.Created($"/api/missions/{result}", result);
         })
+        .WithTags("Missions")
         .WithName("CreateMission")
         .WithDescription("Create a new mission")
         .Produces<Guid>(StatusCodes.Status201Created)

@@ -12,6 +12,7 @@ public class DeleteMessageEndpoint : ICarterModule
             await sender.Send(new DeleteMessageCommand(id), cancellationToken);
             return TypedResults.NoContent();
         })
+        .WithTags("Messages")
         .WithName("DeleteMessage")
         .WithDescription("Delete message")
         .Produces(StatusCodes.Status204NoContent)

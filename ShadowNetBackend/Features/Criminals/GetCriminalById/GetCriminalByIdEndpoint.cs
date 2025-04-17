@@ -14,6 +14,7 @@ public class GetCriminalByIdEndpoint : ICarterModule
             var result = await sender.Send(new GetCriminalByIdQuery(id), cancellationToken);
             return TypedResults.Ok(result);
         })
+        .WithTags("Criminals")
         .WithName("GetCriminalById")
         .WithDescription("Get criminal by Id")
         .Produces<CriminalDto>(StatusCodes.Status200OK)

@@ -15,6 +15,7 @@ public class GetAgentsEndpoint : ICarterModule
             var result = await sender.Send(new GetAgentsQuery(parameters), cancellationToken);
             return TypedResults.Ok(result);
         })
+        .WithTags("Agents")
         .WithName("GetAgents")
         .WithDescription("Get agents")
         .Produces<IEnumerable<AgentDto>>(StatusCodes.Status200OK)

@@ -15,6 +15,7 @@ public class GetCriminalsEndpoint : ICarterModule
             var result = await sender.Send(new GetCriminalsQuery(parameters), cancellationToken);
             return TypedResults.Ok(result);
         })
+        .WithTags("Criminals")
         .WithName("GetCriminals")
         .WithDescription("Get criminals")
         .Produces<IEnumerable<CriminalDto>>(StatusCodes.Status200OK)

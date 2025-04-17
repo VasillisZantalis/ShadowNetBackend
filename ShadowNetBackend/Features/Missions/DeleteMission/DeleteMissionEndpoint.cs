@@ -12,6 +12,7 @@ public class DeleteMissionEndpoint : ICarterModule
             await sender.Send(new DeleteMissionCommand(id), cancellationToken);
             return TypedResults.NoContent();
         })
+        .WithTags("Messages")
         .WithName("DeleteMission")
         .WithDescription("Delete mission")
         .Produces(StatusCodes.Status204NoContent)

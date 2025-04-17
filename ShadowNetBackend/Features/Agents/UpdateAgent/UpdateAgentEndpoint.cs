@@ -12,6 +12,7 @@ public class UpdateAgentEndpoint : ICarterModule
             await sender.Send(new UpdateAgentCommand(agentForUpdate), cancellationToken);
             return TypedResults.NoContent();
         })
+        .WithTags("Agents")
         .WithName("UpdateAgent")
         .WithDescription("Update an existing agent")
         .Produces(StatusCodes.Status204NoContent)

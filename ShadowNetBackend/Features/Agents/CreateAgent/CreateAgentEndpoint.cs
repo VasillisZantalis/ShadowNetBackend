@@ -12,9 +12,10 @@ public class CreateAgentEndpoint : ICarterModule
             var result = await sender.Send(new CreateAgentCommand(agentForCreation), cancellationToken);
             return TypedResults.Created($"/api/agents/{result}", result);
         })
+        .WithTags("Agents")
         .WithName("CreateAgent")
         .WithDescription("Create a new agent")
-        .Produces<AgentForCreationDto>(StatusCodes.Status201Created)
+        .Produces<Guid>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound);
     }

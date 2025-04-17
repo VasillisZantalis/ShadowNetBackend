@@ -12,6 +12,7 @@ public class CreateMessageEndpoint : ICarterModule
             var result = await sender.Send(new CreateMessageCommand(messageForCreation), cancellationToken);
             return TypedResults.Created($"/api/messages/{result}", result);
         })
+        .WithTags("Messages")
         .WithName("CreateMessage")
         .WithDescription("Create a new message")
         .Produces<Guid>(StatusCodes.Status201Created)

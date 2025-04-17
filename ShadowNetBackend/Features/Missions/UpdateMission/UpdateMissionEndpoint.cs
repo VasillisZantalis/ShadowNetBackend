@@ -12,6 +12,7 @@ public class UpdateMissionEndpoint : ICarterModule
             await sender.Send(new UpdateMissionCommand(missionForUpdate), cancellationToken);
             return TypedResults.NoContent();
         })
+        .WithTags("Missions")
         .WithName("UpdateMission")
         .WithDescription("Update an existing mission")
         .Produces(StatusCodes.Status204NoContent)

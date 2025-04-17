@@ -14,6 +14,7 @@ public class UpdateCriminalEndpoint : ICarterModule
             await sender.Send(new UpdateCriminalCommand(request.CriminalForUpdate), cancellationToken);
             return TypedResults.NoContent();
         })
+        .WithTags("Criminals")
         .WithName("UpdateCriminal")
         .WithDescription("Update an existing criminal")
         .Produces(StatusCodes.Status204NoContent)

@@ -16,6 +16,7 @@ public class GetMessageByIdEndpoint : ICarterModule
             var response = await sender.Send(new GetMessageByIdQuery(id), cancellationToken);
             return TypedResults.Ok(response);
         })
+        .WithTags("Messages")
         .WithName("GetMessageById")
         .WithDescription("Get message by Id")
         .Produces<MessageDto>(StatusCodes.Status200OK)

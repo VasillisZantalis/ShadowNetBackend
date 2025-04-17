@@ -12,6 +12,7 @@ public class DeleteCriminalEndpoint : ICarterModule
             await sender.Send(new DeleteCriminalCommand(id), cancellationToken);
             return TypedResults.NoContent();
         })
+        .WithTags("Criminals")
         .WithName("DeleteCriminal")
         .WithDescription("Delete criminal")
         .Produces(StatusCodes.Status204NoContent)

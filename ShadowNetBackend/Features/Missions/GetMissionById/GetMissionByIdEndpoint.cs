@@ -16,6 +16,7 @@ public class GetMissionByIdEndpoint : ICarterModule
             var response = await sender.Send(new GetByIdMissionQuery(id, encryptionType, encryptionKey), cancellationToken);
             return TypedResults.Ok(response);
         })
+        .WithTags("Missions")
         .WithName("GetMissionById")
         .WithDescription("Get mission by Id")
         .Produces<MissionDto>(StatusCodes.Status200OK)

@@ -12,6 +12,7 @@ public class DeleteAgentEndpoint : ICarterModule
             await sender.Send(new DeleteAgentCommand(id), cancellationToken);
             return TypedResults.NoContent();
         })
+        .WithTags("Agents")
         .WithName("DeleteAgent")
         .WithDescription("Delete agent")
         .Produces(StatusCodes.Status204NoContent)

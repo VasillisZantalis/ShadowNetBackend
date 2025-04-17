@@ -14,6 +14,7 @@ public class GetAgentByIdEndpoint : ICarterModule
             var response = await sender.Send(new GetAgentByIdQuery(id), cancellationToken);
             return TypedResults.Ok(response);
         })
+        .WithTags("Agents")
         .WithName("GetAgentById")
         .WithDescription("Get agent by Id")
         .Produces<AgentDto>(StatusCodes.Status200OK)
