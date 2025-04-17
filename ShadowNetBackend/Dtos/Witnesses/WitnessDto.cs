@@ -1,6 +1,6 @@
-﻿namespace ShadowNetBackend.Features.Witnesses.Common;
+﻿namespace ShadowNetBackend.Dtos.Witnesses;
 
-public record WitnessResponse(
+public record WitnessDto(
     Guid Id,
     string FirstName,
     string LastName,

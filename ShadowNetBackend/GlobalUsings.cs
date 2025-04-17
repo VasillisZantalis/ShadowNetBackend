@@ -23,5 +23,6 @@ global using ShadowNetBackend.Dtos.Criminals;
 global using ShadowNetBackend.Dtos.Missions;
 global using ShadowNetBackend.Dtos.Messages;
 global using ShadowNetBackend.Dtos.SafeHouses;
+global using ShadowNetBackend.Dtos.Witnesses;
 global using Carter;
 global using Serilog;
