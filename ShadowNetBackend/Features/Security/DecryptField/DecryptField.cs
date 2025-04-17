@@ -1,8 +1,8 @@
 ﻿namespace ShadowNetBackend.Features.Security.DecryptField;
 
-public record DecryptFieldCommand(string Field, string? EncryptionKey, EncryptionType? EncryptionType) : IRequest<string>;
+public record DecryptFieldCommand(string Field, string? EncryptionKey, EncryptionType? EncryptionType) : ICommand<string>;
 
-public class DecryptFieldCommandHandler : IRequestHandler<DecryptFieldCommand, string>
+public class DecryptFieldCommandHandler : ICommandHandler<DecryptFieldCommand, string>
 {
     private readonly ICryptographyService _cryptographyService;
     public DecryptFieldCommandHandler(ICryptographyService cryptographyService)
@@ -16,21 +16,19 @@ public class DecryptFieldCommandHandler : IRequestHandler<DecryptFieldCommand, s
     }
 }
 
-public static class DecryptFieldEndpoints
+public class DecryptFieldEndpoint : ICarterModule
 {
-    public static void MapDecryptFieldEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/decryptfield").WithTags("Security");
-        group.MapPost("", DecryptField).WithName("DecryptField");
-    }
-
-    private static async Task<IResult> DecryptField(DecryptFieldCommand command, ISender sender, CancellationToken cancellationToken)
-    {
-        if (command is null)
-            return TypedResults.BadRequest("Invalid Parameters");
-
-        var decryptedField = await sender.Send(command, cancellationToken);
-
-        return TypedResults.Ok(decryptedField);
+        app.MapPost("/api/decryptfield", async (
+            [FromBody] DecryptFieldCommand command,
+            ISender sender,
+            CancellationToken cancellationToken) =>
+        {
+            var decryptedField = await sender.Send(command, cancellationToken);
+            return TypedResults.Ok(decryptedField);
+        })
+        .WithTags("Security")
+        .WithName("DecryptField");
     }
 }
