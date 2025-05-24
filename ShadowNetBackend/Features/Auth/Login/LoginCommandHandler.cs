@@ -2,26 +2,15 @@
 
 namespace ShadowNetBackend.Features.Auth.Login;
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, object?>
+public class LoginCommandHandler(UserManager<Agent> userManager, ApplicationDbContext dbContext, JwtHelper jwtHelper) : IRequestHandler<LoginCommand, object?>
 {
-    private readonly UserManager<Agent> _userManager;
-    private readonly ApplicationDbContext _dbContext;
-    private readonly JwtHelper _jwtHelper;
-
-    public LoginCommandHandler(UserManager<Agent> userManager, ApplicationDbContext dbContext, JwtHelper jwtHelper)
-    {
-        _userManager = userManager;
-        _dbContext = dbContext;
-        _jwtHelper = jwtHelper;
-    }
-
     public async Task<object?> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(request.Email);
-        if (user != null && await _userManager.CheckPasswordAsync(user, request.Password))
+        var user = await userManager.FindByEmailAsync(request.Email);
+        if (user != null && await userManager.CheckPasswordAsync(user, request.Password))
         {
-            var accessToken = _jwtHelper.GenerateJwtToken(user);
-            var refreshToken = _jwtHelper.GenerateRefreshToken();
+            var accessToken = jwtHelper.GenerateJwtToken(user);
+            var refreshToken = jwtHelper.GenerateRefreshToken();
 
             var refreshTokenEntity = new RefreshToken.RefreshToken
             {
@@ -30,8 +19,8 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, object?>
                 Expires = DateTimeOffset.UtcNow.AddDays(7),
             };
 
-            _dbContext.RefreshTokens.Add(refreshTokenEntity);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            dbContext.RefreshTokens.Add(refreshTokenEntity);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return new { AccessToken = accessToken, RefreshToken = refreshToken };
         }

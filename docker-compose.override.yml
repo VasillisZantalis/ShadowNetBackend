@@ -8,8 +8,6 @@ services:
     restart: always
     ports:
       - 5432:5432
-    volumes:
-      - postgres_shadownetdb:/var/lib/postgresql/data
 
   seq:
     container_name: seq

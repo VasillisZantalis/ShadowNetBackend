@@ -7,6 +7,3 @@ services:
 
   redis:
     image: redis:latest  
-
-volumes:
-  postgres_shadownetdb:
