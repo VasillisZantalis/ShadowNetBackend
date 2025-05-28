@@ -18,7 +18,9 @@ public class CreateMissionCommandValidator : AbstractValidator<CreateMissionComm
 
         RuleFor(x => x.MissionForCreation.Date).NotEmpty();
 
-        RuleFor(x => x.MissionForCreation.EncryptionType).NotEmpty().WithMessage("Encryption type is required");
+        RuleFor(x => x.MissionForCreation.EncryptionType)
+            .Must(value => Enum.IsDefined(typeof(EncryptionType), value))
+            .WithMessage("Incorrect Encryption type");
     }
 }
 
