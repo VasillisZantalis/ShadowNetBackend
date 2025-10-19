@@ -36,4 +36,19 @@ public static class AgentsMapper
             ClearanceLevel = agentForCreation.ClearanceLevel
         };
     }
+
+    public static Agent ToAgent(this AgentForUpdateDto agentForUpdate)
+    {
+        return new Agent
+        {
+            Id = agentForUpdate.Id.ToString(),
+            FirstName = agentForUpdate.FirstName,
+            LastName = agentForUpdate.LastName,
+            Image = agentForUpdate.Image != null ? FileHelper.ConvertFromBase64(agentForUpdate.Image) : null,
+            Alias = agentForUpdate.Alias,
+            Specialization = agentForUpdate.Specialization,
+            ClearanceLevel = agentForUpdate.ClearanceLevel,
+            MissionId = agentForUpdate.MissionId
+        };
+    }
 }

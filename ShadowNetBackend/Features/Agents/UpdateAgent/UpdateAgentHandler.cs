@@ -25,29 +25,32 @@ internal class UpdateAgentHandler(
 {
     public async Task<bool> Handle(UpdateAgentCommand command, CancellationToken cancellationToken)
     {
-        var agent = await dbContext.Agents.FindAsync([command.AgentForUpdate.Id.ToString()], cancellationToken);
-        if (agent is null)
-            throw new AgentNotFoundException();
-
-        if (command.AgentForUpdate.MissionId.HasValue)
+        await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        try
         {
-            var exists = await dbContext.ExistsAsync<Mission>(command.AgentForUpdate.MissionId.Value, cancellationToken);
-            if (!exists)
-                throw new MissionNotFoundException();
+            var agent = await dbContext.Agents.FindAsync([command.AgentForUpdate.Id.ToString()], cancellationToken);
+            if (agent is null)
+                throw new AgentNotFoundException();
+
+            if (command.AgentForUpdate.MissionId.HasValue)
+            {
+                var exists = await dbContext.ExistsAsync<Mission>(command.AgentForUpdate.MissionId.Value, cancellationToken);
+                if (!exists)
+                    throw new MissionNotFoundException();
+            }
+
+            dbContext.Entry(agent).CurrentValues.SetValues(command.AgentForUpdate.ToAgent());
+            await dbContext.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+
+            await cache.RemoveAsync(nameof(CacheKeys.Agents));
+
+            return true;
         }
-
-        agent.FirstName = command.AgentForUpdate.FirstName;
-        agent.LastName = command.AgentForUpdate.LastName;
-        agent.Alias = command.AgentForUpdate.Alias;
-        agent.Specialization = command.AgentForUpdate.Specialization;
-        agent.ClearanceLevel = command.AgentForUpdate.ClearanceLevel;
-        agent.MissionId = command.AgentForUpdate.MissionId;
-        agent.Image = command.AgentForUpdate.Image is null ? null : FileHelper.ConvertFromBase64(command.AgentForUpdate.Image);
-
-        await dbContext.SaveChangesAsync(cancellationToken);
-
-        await cache.RemoveAsync(nameof(CacheKeys.Agents));
-
-        return true;
+        catch (Exception)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
+        }
     }
 }
