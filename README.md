@@ -1,6 +1,6 @@
 ﻿# ShadowNetBackend
 
-ShadowNetBackend is a modern, modular backend service built with ASP.NET Core 9.0. It is designed for scalability, maintainability, and security, leveraging popular open-source libraries and best practices.
+ShadowNetBackend is a modern, modular backend service using the **Vertical Slice Architecture** built with ASP.NET Core 9.0. It is designed for scalability, maintainability, and security, leveraging popular open-source libraries and best practices.
 
 ## Features
 
@@ -18,7 +18,7 @@ ShadowNetBackend is a modern, modular backend service built with ASP.NET Core 9.
 
 ## Architecture
 
-- **Clean Architecture Principles**: Separation of concerns between API, domain, and infrastructure.
+- **Vertical Slice Architecture**: Feature-oriented slices that encapsulate all layers for a single use case.
 - **CQRS Pattern**: Commands and queries are handled separately using MediatR.
 - **Dependency Injection**: All services are registered and resolved via DI.
 - **Modular Endpoints**: Carter is used for organizing endpoints by feature.
