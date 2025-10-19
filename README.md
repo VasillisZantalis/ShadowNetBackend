@@ -54,6 +54,25 @@ ShadowNetBackend is a modern, modular backend service built with ASP.NET Core 9.
 4. Run database migrations.
 5. Start the application.
 
+## How to Run
+
+You can run the application in two ways:
+
+### Option 1: Using Visual Studio
+1. Open the solution in Visual Studio.
+2. Set `docker-compose` as the startup project (via the dropdown next to the Run button).
+3. Click **Run** (F5) to start the containers.
+4. Set `ShadowNetBackend` as the startup project and run it to start the API.
+
+### Option 2: Using Docker CLI
+1. Open a terminal in the project root.
+2. Run the command:
+
+```bash
+docker-compose up
+```
+3.Set `ShadowNetBackend` as the startup project and run it to start the API.
+
 ## Project Structure
 
 - `ShadowNetBackend/` - Main API project
