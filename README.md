@@ -1,6 +1,6 @@
 ﻿# ShadowNetBackend
 
-ShadowNetBackend is a modern, modular backend service built with ASP.NET Core 9.0. It is designed for scalability, maintainability, and security, leveraging popular open-source libraries and best practices.
+ShadowNetBackend is a modern, modular backend service using the **Vertical Slice Architecture** built with ASP.NET Core 9.0. It is designed for scalability, maintainability, and security, leveraging popular open-source libraries and best practices.
 
 ## Features
 
@@ -18,7 +18,7 @@ ShadowNetBackend is a modern, modular backend service built with ASP.NET Core 9.
 
 ## Architecture
 
-- **Clean Architecture Principles**: Separation of concerns between API, domain, and infrastructure.
+- **Vertical Slice Architecture**: Feature-oriented slices that encapsulate all layers for a single use case.
 - **CQRS Pattern**: Commands and queries are handled separately using MediatR.
 - **Dependency Injection**: All services are registered and resolved via DI.
 - **Modular Endpoints**: Carter is used for organizing endpoints by feature.
@@ -53,6 +53,25 @@ ShadowNetBackend is a modern, modular backend service built with ASP.NET Core 9.
 3. Configure secrets and connection strings (see `appsettings.json` and user secrets).
 4. Run database migrations.
 5. Start the application.
+
+## How to Run
+
+You can run the application in two ways:
+
+### Option 1: Using Visual Studio
+1. Open the solution in Visual Studio.
+2. Set `docker-compose` as the startup project (via the dropdown next to the Run button).
+3. Click **Run** (F5) to start the containers.
+4. Set `ShadowNetBackend` as the startup project and run it to start the API.
+
+### Option 2: Using Docker CLI
+1. Open a terminal in the project root.
+2. Run the command:
+
+```bash
+docker-compose up
+```
+3. Set `ShadowNetBackend` as the startup project and run it to start the API.
 
 ## Project Structure
 
