@@ -71,7 +71,7 @@ You can run the application in two ways:
 ```bash
 docker-compose up
 ```
-3.Set `ShadowNetBackend` as the startup project and run it to start the API.
+3. Set `ShadowNetBackend` as the startup project and run it to start the API.
 
 ## Project Structure
 
