@@ -41,7 +41,6 @@ ShadowNetBackend is a modern, modular backend service using the **Vertical Slice
 
 - **CQRS (Command Query Responsibility Segregation)**
 - **Mediator Pattern** (via MediatR)
-- **Repository Pattern** (via EF Core DbContext)
 - **Validation Pipeline** (FluentValidation behaviors)
 - **Dependency Injection**
 - **Modular Routing** (Carter)
